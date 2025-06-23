@@ -1,0 +1,257 @@
+/*timetable.css*/
+body {
+  margin: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f0f8ff;
+}
+
+.timetable-text {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+#grade-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+}
+
+#grade-buttons button {
+  flex: 1 !important;  /* 모든 버튼이 똑같이 넓어짐 */
+  padding: 10px 0;
+  font-size: 15px;
+  background-color: #4590ff;
+  color: #fff;
+  border: 1px solid #5a9cff;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+#grade-buttons button:hover {
+  background-color: #6ca9ff;
+}
+
+#grade-buttons button.selected {
+  background-color: #ff7043;
+  border-color: #ff521e;
+  font-weight: bold;
+}
+
+#timetable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+#timetable th, #timetable td {
+  width: 100px;              /* 셀 너비 고정 */
+  height: 60px;              /* 셀 높이 고정 */
+  border: 1px solid #aaa;
+  height: 60px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 12px !important;      /* ✅ 폰트 크기 줄임 */
+  padding: 4px 6px !important;     /* ✅ 패딩 줄임 */
+  width: 70px !important;          /* ✅ 너비 줄임 */
+  height: 48px !important;         /* ✅ 높이 줄임 */
+  background-color: #fff; /* 요일 줄 배경색 확실하게 지정 */
+}
+
+.timetable-text {
+  font-size: 20px;
+}
+
+#timetable td {
+  background-color: #fff;
+  cursor: pointer;
+}
+
+#timetable td:hover {
+  background-color: #f0f8ff;
+}
+
+#subject-list {
+  display: flex !important;
+  flex-wrap: nowrap !important;      /* ✅ 줄바꿈 방지 */
+  overflow-x: auto !important;       /* ✅ 가로 스크롤 허용 */
+  gap: 8px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  cursor: grab;
+}
+
+#subject-list::-webkit-scrollbar {
+  display: none;
+}
+
+.subject-button {
+  flex: 0 0 auto !important;  
+  white-space: nowrap;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background-color: #4a90e2;
+  color: #fff;
+  border: none;
+  margin-right: 4px;
+}
+
+.subject-button:hover {
+  background-color: #ff7043 !important;
+  color: white;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  #subject-list {
+    display: block !important;
+    padding: 10px;
+  }
+}
+
+.nav-icon {
+  width: 40px;
+  height: 40px;
+}
+
+#timetable td:first-child,
+#timetable th:first-child {
+  width: 100px;  /* 원하는 값으로 줄이세요 */
+  white-space: nowrap;  /* 줄바꿈 방지 */
+}
+
+#timetable th,
+#timetable td {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+body {
+  padding-bottom: 96px !important; /* 하단 네비 높이만큼 여유 줌 */
+}
+
+#timetable {
+  margin-bottom: 6px; /* 시간표 하단 공간 확보 */
+}
+
+@media (max-width: 768px) {
+  #timetable th,
+  #timetable td {
+    font-size: 13px !important;
+    padding: 6px !important;
+  }
+
+  .timetable-text {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+}
+
+/* #grade-buttons {
+  display: flex;
+  justify-content: space-between;  
+  flex-wrap: nowrap;
+  gap: 6px;
+  padding: 8px 12px;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+}
+
+#grade-buttons button {
+  flex: 1;
+  padding: 8px 0;
+  font-size: 13px;
+  white-space: nowrap;
+  border-radius: 6px;
+  min-width: 0;
+} */
+
+/* #subject-list {
+  display: block !important;
+  padding: 10px;
+  flex-wrap: wrap;
+} */
+
+
+#subject-list {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  gap: 8px;
+  padding: 10px;
+}
+
+#subject-list::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* 과목/반 전체 목록 */
+#subject-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 10px;
+  overflow-x: hidden;
+}
+
+/* 학년 선택 버튼 */
+/* #grade-buttons {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+} */
+
+/* 버튼 기본 디자인 */
+.subject-button {
+  padding: 10px 16px;
+  font-size: 15px;
+  border: 1px solid #5a9cff;
+  border-radius: 8px;
+  background-color: #90bcff;
+  margin: 4px 4px;
+  white-space: nowrap;
+}
+
+/* 선택 시 강조 */
+.subject-button.selected {
+  background-color: #ff7043 !important;
+  border: 1px solid #ff521e;
+  color: white;
+  font-weight: bold;
+}
+
+/* 제목 구분 */
+#subject-list p {
+  font-weight: bold;
+  margin: 12px 4px 4px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* 반응형 스크롤 영역 */
+#subject-list .scroll-row {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding-bottom: 4px;
+}
+
+#subject-list .scroll-row::-webkit-scrollbar {
+  /* display: none; */
+   height: 6px; /* 또는 기본값 */
+}
+.scroll-row::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+.scroll-row::-webkit-scrollbar-thumb {
+  background: #999;
+  border-radius: 4px;
+}

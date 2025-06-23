@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학교 생활 사이트</title>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/style.mobile.css" media="(max-width: 768px)">
+    <link rel="stylesheet" href="/css/style.desktop.css" media="(min-width: 769px)">
+    <link rel="stylesheet" href="/css/main.mobile.css" media="(max-width: 768px)">
+    <link rel="stylesheet" href="/css/main.desktop.css" media="(min-width: 769px)">
+</head>
+<body>
+
+<div class="haeder">
+  <div class="logo-container">  <!-- 좌측 상단-->
+      <img src="/png/SchoolLogo.png" alt="로고">
+      <div class="school-name">창원중앙고 커뮤니티</div>
+  </div>
+</div>
+
+
+<div class="button-container">
+    <!-- 학교 홈-->
+    <a href="https://cwjungang-h.gne.go.kr/cwjungang-h/main.do" class="btn-link">
+        <div class="btn">
+            <img src="/png/homepage.png" alt="아이콘1" class="btn-icon"> 
+            학교<br>홈
+        </div>
+    </a>
+    <!--공지사항--><!--개별 페이지-추후개발예정-->
+    <a href="https://cwjungang-h.gne.go.kr/cwjungang-h/na/ntt/selectNttList.do?mi=144376&bbsId=123964" class="btn2-link">
+        <div class="btn2">
+            <img src="/png/notice.png" alt="아이콘2" class="btn2-icon">
+            공지<br>사항
+        </div>
+    </a>
+    <!--학사일정-->
+    <a href="https://cwjungang-h.gne.go.kr/cwjungang-h/cm/cntnts/cntntsView.do?mi=570179&cntntsId=23263" class="btn3-link">
+        <div class="btn3">
+            <img src="/png/calendar.png" alt="아이콘3" class="btn3-icon">
+            학사<br>일정
+        </div>
+    </a>
+    <!--대학어디가-->
+    <a href="https://www.adiga.kr/man/inf/mainView.do?menuId=PCMANINF1000" class="btn4-link">
+        <div class="btn4">
+            <img src="/png/adiga.png" alt="아이콘4" class="btn4-icon">
+            대학<br>어디가
+        </div>
+    </a>
+    <!--성적 산출-->
+    <a href="" class="btn5-link">
+        <div class="btn5">
+            <img src="/png/grade.png" alt="아이콘5" class="btn5-icon">
+            성적<br>산출
+        </div>
+    </a>
+    <!--반편성확인-->
+    <a href="https://cwjungang-h.gne.go.kr/cwjungang-h/ad/selectClClasInqireList.do?mi=568617" class="btn6-link">
+        <div class="btn6">
+            <img src="/png/shuffle.png" alt="아이콘6" class="btn6-icon">
+            반편성<br>확인
+        </div>
+    </a>
+</div>
+
+<h2>급식표</h2>
+<button id="uploadBtn" class="custom-upload-btn">
+  <img src="/png/food.png" alt="업로드" style="width: 35px; height: 35px"/>
+  <span>급식표 업로드</span>
+</button>
+<div id="passwordModal" class="modal">
+  <div class="modal-content">
+    <div class="password-wrapper">
+      <input type="password" id="modalPasswordInput" placeholder="비밀번호 입력" />
+      <span id="togglePassword" class="eye-button"><!--👁️-->
+        <img id="eyeIcon" src="/png/eyeopen.png" alt="비밀번호 보기"/>
+      </span>
+    </div>
+    <div class="modal-buttons">
+      <button id="modalPasswordCheckBtn">확인</button>
+      <button id="modalCancelBtn">취소</button>
+    </div>
+    <div id="modalMessage"></div>
+  </div>
+</div>
+
+<input type="file" id="fileInput" accept=".xlsx, .xls" style="display:none;" />
+<div id="container"></div>
+
+    
+<h2>플래너</h2>
+<div class="calendarcontainer">
+    <div class="calendar-container">
+      <input type="date" id="calendar">
+    </div>
+    <div class="checklist-container">
+      <h2 id="date-title"></h2>
+      <ul id="task-list"></ul>
+      <input type="text" id="new-task" placeholder="할 일을 입력하세요">
+      <button onclick="addTask()">추가</button>
+    </div>
+  </div>
+
+
+<!-- 하단 네비게이션 -->
+<div class="bottom-nav">
+    <!-- 홈 -->
+    <a href="/main.html"><div class="btn7"><img src="/png/home_1.png" class="btn7-icon"></div></a>
+    <!-- 시간표 -->
+    <a href="/timetable.html"><div class="btn8"><img src="/png/table_1.png" class="btn8-icon"></div></a>
+    <!-- 채팅 -->
+    <a href="/chat.html"><div class="btn9"><img src="/png/chat_1.png" class="btn9-icon"></div></a>
+    <!-- 게시판 -->
+    <a href="/anonymous.html"><div class="btn10"><img src="/png/board_1.png" class="btn10-icon"></div></a>
+    <!-- 프로필 -->
+    <a href="/profile.html"><div class="btn11"><img src="/png/profile_1.png" class="btn11-icon"></div></a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<script>
+  sessionStorage.setItem('user_id', '{{ user.id }}'); // 서버에서 받은 고유 ID
+</script>
+
+<script src="/js/main.js"></script>
+<script src="/js/script.js"></script>
+</body>
+</html>

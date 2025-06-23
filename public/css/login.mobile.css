@@ -1,0 +1,247 @@
+/* 전체 페이지 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 10px; /* 모바일에서 여백 확보 */
+}
+
+/* 컨테이너 스타일 */
+.container {
+    background: rgb(255, 255, 255);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 480px;
+    position: relative;
+}
+
+/* 입력 그룹 스타일 */
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    position: relative;
+}
+
+/* 입력 필드 스타일 */
+input {
+    padding: 14px;
+    margin: 12px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 18px;
+    flex: 1;
+    width: 100%;
+    transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+    width: 100%;
+}
+
+/* 비밀번호 표시/숨김 버튼 스타일 */
+.toggle-password {
+    /* cursor: pointer;
+    font-size: 14px;
+    color: gray;
+    position: absolute;
+    right: 10px; */
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: gray;
+    cursor: pointer;
+}
+
+/* 버튼 스타일 */
+button {
+    margin: 10px 4px;
+    background: #ff5722;
+    color: white;
+    padding: 14px 205px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.button-check {
+    background: #ff5722;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+    /* 숨김 요소 스타일 */
+.hidden {
+    display: none;
+}
+
+/* 회원가입 버튼 스타일 */
+.switch, .signup-btn {
+    margin-top: 10px;
+    color: #007BFF;
+    cursor: pointer;
+}
+
+/* 닫기 버튼 스타일 */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: gray;
+    font-size: 18px;
+}
+
+/* 버튼 그룹 스타일 */
+.btn-group {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+/* 버튼 그룹 내 개별 버튼 스타일 */
+.btn-group button {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* 활성화된 버튼 스타일 */
+.btn-group button.active {
+    background-color: #007BFF;
+    color: white;
+}
+
+/* 비활성화된 버튼 스타일 */
+.btn-group button:not(.active) {
+    background-color: #ddd;
+    color: black;
+}
+
+@media (max-width: 600px) {
+.container {
+    padding: 20px 15px;
+    border-radius: 8px;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+.input-group {
+    gap: 6px;
+}
+
+input {
+    padding: 12px;
+    font-size: 15px;
+}
+
+button {
+    padding: 12px;
+    font-size: 14px;
+}
+
+.btn-group {
+    flex-direction: column;
+}
+
+.btn-group button {
+    width: 100%;
+}
+
+.toggle-password {
+    font-size: 12px;
+    right: 8px;
+}
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 20px;
+    align-items: flex-start;
+    background-color: #f4f4f4;
+  }
+
+  .container {
+    width: 100% !important;
+    max-width: 100%;
+    padding: 20px 16px;
+    border-radius: 12px;
+    box-shadow: none;
+    box-sizing: border-box;
+  }
+
+  h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  .input-group {
+    flex-direction: row;
+    gap: 6px;
+  }
+
+  input {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+
+  button {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    margin: 10px 0;
+    border-radius: 10px;
+  }
+
+  .button-check {
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  .btn-group {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn-group button {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .toggle-password {
+    font-size: 12px;
+    right: 10px;
+  }
+
+  .switch, .signup-btn {
+    font-size: 14px;
+  }
+
+  .close-btn {
+    font-size: 16px;
+    top: 8px;
+    right: 8px;
+  }
+}

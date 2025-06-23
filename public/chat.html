@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>채팅방</title>
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/style.mobile.css" media="(max-width: 768px)">
+  <link rel="stylesheet" href="/css/style.desktop.css" media="(min-width: 769px)">
+  <link rel="stylesheet" href="/css/chat.mobile.css" media="(max-width: 768px)">
+  <link rel="stylesheet" href="/css/chat.desktop.css" media="(min-width: 769px)">
+</head>
+<body>
+  <div class="container">
+    <div class="tabs">
+      <button id="tab-list" class="tab-btn active">내 채팅방</button>
+      <button id="tab-join" class="tab-btn">채팅방 가입</button>
+      <button id="tab-create" class="tab-btn">채팅방 생성</button>
+    </div>
+
+    <!-- 내 채팅방 -->
+    <div id="list" class="tab-content active">
+      <h1>내 채팅방</h1>
+      <div id="roomList" class="room-list"></div>
+    </div>
+
+    <!-- 채팅방 가입 -->
+    <div id="join" class="tab-content">
+      <h1>채팅방 가입</h1>
+      <div class="category-filters" id="joinCategoryFilters"></div>
+      <input id="joinSearchInput" placeholder="채팅방 이름 검색" oninput="filterRooms()" />
+      <div id="filteredRoomList" class="filtered-room-list"></div>
+      <input id="joinPassword" placeholder="비밀번호" />
+      <button id="joinBtn" class="yellow-btn">가입하기</button>
+    </div>
+
+    <!-- 채팅방 생성 -->
+    <div id="create" class="tab-content">
+      <h1>채팅방 생성</h1>
+      <input id="createRoomTitle" placeholder="채팅방 제목 입력" />
+      <div class="category-list" id="createCategoryList"></div>
+      <label><input type="checkbox" id="allowDefaultProfile" /> 기본 프로필 허용</label><br />
+      <input id="createPassword" placeholder="비밀번호 (선택)" />
+      <button id="createBtn" class="yellow-btn">생성하기</button>
+    </div>
+  </div>
+
+  <!-- 하단 네비게이션 -->
+  <div class="bottom-nav">
+      <!-- 홈 -->
+      <a href="/main.html"><div class="btn7"><img src="/png/home_1.png" class="btn7-icon"></div></a>
+      <!-- 시간표 -->
+      <a href="/timetable.html"><div class="btn8"><img src="/png/table_1.png" class="btn8-icon"></div></a>
+      <!-- 채팅 -->
+      <a href="/chat.html"><div class="btn9"><img src="/png/chat_1.png" class="btn9-icon"></div></a>
+      <!-- 게시판 -->
+      <a href="/anonymous.html"><div class="btn10"><img src="/png/board_1.png" class="btn10-icon"></div></a>
+      <!-- 프로필 -->
+      <a href="/profile.html"><div class="btn11"><img src="/png/profile_1.png" class="btn11-icon"></div></a>
+  </div>
+
+  <script src="/js/chat.js"></script>
+  <script src="/js/script.js"></script>
+</body>
+</html>

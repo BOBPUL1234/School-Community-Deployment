@@ -1,0 +1,165 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f8ff;
+}
+
+.container {
+  max-width: 480px;
+  margin: 10px auto;
+  padding: 0 12px 80px 12px;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.tab-btn {
+  padding: 10px 12px;
+  border: none;
+  background: #eee;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 4px;
+  flex-grow: 1;
+  margin: 0 4px;
+  transition: background-color 0.3s;
+}
+
+.tab-btn.active {
+  background: #4a90e2;
+  color: #333;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.room-list, .filtered-room-list {
+  border: 1px solid #ccc;
+  max-height: 250px;
+  overflow-y: auto;
+  padding: 6px;
+  background: #f9f9f9;
+  border-radius: 4px;
+}
+
+.room {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  user-select: none;
+}
+
+.room:hover {
+  background-color: #f4f4f4;
+}
+
+.lock-icon {
+  color: #d9534f;
+  margin-right: 5px;
+}
+
+.category-filter {
+  display: inline-block;
+  background: #eee;
+  padding: 4px 8px;
+  margin: 3px 6px 3px 0;
+  border-radius: 12px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.9em;
+}
+
+.category-filter.active {
+  background: #4a90e2;
+  font-weight: 700;
+  color: #333;
+}
+
+input[type="text"], input[type="password"], input#joinSearchInput, input#createRoomTitle, input#createPassword, input#joinPassword {
+  width: 100%;
+  padding: 8px 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.action-btn {
+  padding: 10px 20px;
+  background: #ffc107;
+  border: none;
+  color: #333;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 8px;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.action-btn:hover {
+  background: #ffb300;
+}
+
+/* 하단 배너 */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;                  /* 화면 가운데 기준점 */
+  transform: translateX(-50%); /* 정가운데로 이동 */
+  width: 100vw;               /* 뷰포트 전체 너비 */     /* 최대 너비 제한 */
+  background: #fff;
+  border-top: 1px solid #ccc;
+  display: flex;
+  justify-content: space-around;
+  padding: 6px 0;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.bottom-nav button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #888;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.bottom-nav button.active {
+  color: #ffc107;
+}
+
+.bottom-nav button div {
+  font-size: 12px;
+  margin-top: 2px;
+}
+/* 카테고리 리스트 (생성 탭) */
+.category-list button.category-filter {
+  margin: 4px 6px 4px 0;
+  padding: 6px 12px;
+  font-size: 1em;
+}
+
+/* 넓힌 입력창 */
+#joinSearchInput, #createRoomTitle {
+  min-width: 100%;
+  max-width: 100%;
+}
+#joinPassword {
+  display: none;
+}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시간표</title>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/style.mobile.css" media="(max-width: 768px)">
+    <link rel="stylesheet" href="/css/style.desktop.css" media="(min-width: 769px)">
+    <link rel="stylesheet" href="/css/timetable.mobile.css" media="(max-width: 768px)">
+    <link rel="stylesheet" href="/css/timetable.desktop.css" media="(min-width: 769px)">
+</head>
+<body>
+    <p class="timetable-text">📚시간표</p>
+    
+<!-- 학년 선택 버튼 -->
+<div id="grade-buttons">
+    <button onclick="selectGrade(1)">1학년</button>
+    <button onclick="selectGrade(2)">2학년</button>
+    <button onclick="selectGrade(3)">3학년</button>
+    <button onclick="selectGrade(4)">교사</button>
+  </div>
+
+    <!-- 시간표 표 -->
+<table id="timetable">
+    <thead>
+      <tr>
+        <th>시간/요일</th>
+        <th>월</th>
+        <th>화</th>
+        <th>수</th>
+        <th>목</th>
+        <th>금</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 1교시 ~ 6교시 (예시) -->
+      <tr>
+        <td>
+          1교시<br>
+          8:40~9:30
+        </td>
+        <td data-cell="r1c1" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r1c2" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r1c3" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r1c4" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r1c5" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+    </tr>
+      <tr>
+        <td>
+          2교시<br>
+          9:40~10:30
+        </td>
+        <td data-cell="r2c1" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r2c2" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r2c3" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r2c4" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r2c5" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+      </tr>
+      <tr>
+        <td>
+          3교시<br>
+          10:40~11:30
+        </td>
+        <td data-cell="r3c1" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r3c2" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r3c3" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r3c4" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r3c5" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+      </tr>
+      <tr>
+        <td>
+          4교시<br>
+          11:40~12:30
+        </td>
+        <td data-cell="r4c1" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r4c2" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r4c3" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r4c4" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r4c5" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+      </tr>
+      <tr>
+        <td>
+          5교시<br>
+          13:30~14:20
+        </td>
+        <td data-cell="r5c1" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r5c2" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r5c3" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r5c4" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r5c5" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+      </tr>
+      <tr>
+        <td>
+          6교시<br>
+          14:30~15:20
+        </td>
+        <td data-cell="r6c1" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r6c2" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r6c3" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r6c4" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+        <td data-cell="r6c5" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)" onclick="clearCell(event)"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 과목 버튼이 표시될 영역 -->
+  <div id="subject-list">
+    <!-- 학년 선택에 따라 과목 버튼들이 추가됩니다. -->
+  </div>
+      
+      
+<!-- 하단 네비게이션 -->
+<div class="bottom-nav">
+    <!-- 홈 -->
+    <a href="/main.html"><div class="btn7"><img src="/png/home_1.png" class="btn7-icon"></div></a>
+    <!-- 시간표 -->
+    <a href="/timetable.html"><div class="btn8"><img src="/png/table_1.png" class="btn8-icon"></div></a>
+    <!-- 채팅 -->
+    <a href="/chat.html"><div class="btn9"><img src="/png/chat_1.png" class="btn9-icon"></div></a>
+    <!-- 게시판 -->
+    <a href="/anonymous.html"><div class="btn10"><img src="/png/board_1.png" class="btn10-icon"></div></a>
+    <!-- 프로필 -->
+    <a href="/profile.html"><div class="btn11"><img src="/png/profile_1.png" class="btn11-icon"></div></a>
+</div>
+
+<script src="/js/timetable.js"></script>
+<script src="/js/script.js"></script>
+</body>
+</html>

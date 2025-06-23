@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>마이페이지</title>
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/style.mobile.css" media="(max-width: 768px)">
+  <link rel="stylesheet" href="/css/style.desktop.css" media="(min-width: 769px)">
+  <link rel="stylesheet" href="/css/profile.mobile.css" media="(max-width: 768px)">
+  <link rel="stylesheet" href="/css/profile.desktop.css" media="(min-width: 769px)">
+</head>
+<body>
+  <div class="container">
+    <div class="header">홍길동 님의 마이페이지</div>
+
+    <div class="section-title">게시판</div>
+    <div class="link-item" onclick="loadMyPosts()">내 글 보기</div>
+    <div class="link-item" onclick="loadLikedPosts()">좋아요한 게시물</div>
+    <div class="link-item" onclick="loadBookmarkedPosts()">북마크한 게시물</div>
+    <div class="link-item" onclick="loadMyComments()">내가 작성한 댓글</div>
+
+    <div class="section-title">계정</div>
+    <!-- <div class="link-item" onclick="openNameChangePopup()">이름 변경</div> -->
+    <div class="link-item" onclick="openPasswordPopup()">비밀번호 변경</div>
+    <div class="link-item" onclick="openLogoutPopup()">로그아웃</div>
+  </div>
+
+  <!-- 활동 전체화면 -->
+  <div class="activity-screen" id="activityScreen">
+    <div class="activity-header" onclick="closeActivity()">&lt; <span id="activityTitle">활동 제목</span></div>
+    <div class="activity-content" id="activityContent">
+      <!-- 글 리스트가 여기에 삽입됨 -->
+    </div>
+  </div>
+
+  <!-- 이름 변경 팝업
+  <div class="popup" id="nameChangePopup">
+    <div class="popup-inner">
+      <h3>이름 변경</h3>
+      <label>새 이름</label>
+      <input type="text" id="newNameInput" placeholder="새 이름 입력">
+      <div class="popup-buttons">
+        <button onclick="closeNameChangePopup()">취소</button>
+        <button onclick="changeName()">확인</button>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- 비밀번호 변경 팝업 -->
+  <!-- 비밀번호 변경 팝업 -->
+<div class="popup" id="passwordPopup">
+    <div class="popup-inner">
+        <h3>비밀번호 변경</h3>
+        <label>현재 비밀번호</label>
+        <input type="password" id="currentPassword" placeholder="현재 비밀번호 입력">
+        <label>새 비밀번호</label>
+        <input type="password" id="newPassword" placeholder="새 비밀번호 입력">
+        <label>새 비밀번호 확인</label>
+        <input type="password" id="confirmPassword" placeholder="새 비밀번호 확인">
+        <div class="popup-buttons">
+            <button onclick="closePasswordPopup()">취소</button>
+            <button onclick="changePassword()">확인</button>
+        </div>
+    </div>
+</div>
+
+
+  <!-- 로그아웃 팝업 -->
+  <div class="popup" id="logoutPopup">
+    <div class="popup-inner">
+      <h3>로그아웃 하시겠습니까?</h3>
+      <div class="popup-buttons">
+        <button onclick="closeLogoutPopup()">취소</button>
+        <button onclick="location.href='login.html'">확인</button>
+      </div>
+    </div>
+  </div>
+
+<div class="bottom-nav">
+    <!-- 홈 -->
+    <a href="/main.html"><div class="btn7"><img src="/png/home_1.png" class="btn7-icon"></div></a>
+    <!-- 시간표 -->
+    <a href="/timetable.html"><div class="btn8"><img src="/png/table_1.png" class="btn8-icon"></div></a>
+    <!-- 채팅 -->
+    <a href="/chat.html"><div class="btn9"><img src="/png/chat_1.png" class="btn9-icon"></div></a>
+    <!-- 게시판 -->
+    <a href="/anonymous.html"><div class="btn10"><img src="/png/board_1.png" class="btn10-icon"></div></a>
+    <!-- 프로필 -->
+    <a href="/profile.html"><div class="btn11"><img src="/png/profile_1.png" class="btn11-icon"></div></a>
+</div>
+
+  <script src="/js/anonymous.js"></script>  
+  <script src="/js/profile.js"></script>
+  <script src="/js/script.js"></script>
+
+  <!-- 게시물 상세 팝업 -->
+<div id="activityPopup" style="display: none; position: fixed; top: 10%; left: 50%; transform: translateX(-50%);
+  background: white; border: 1px solid #ccc; padding: 20px; z-index: 1000; max-width: 600px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); border-radius: 10px;">
+</div>
+</body>
+</html>

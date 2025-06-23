@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+      <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/login.mobile.css" media="(max-width: 768px)">
+    <link rel="stylesheet" href="/css/login.desktop.css" media="(min-width: 769px)">
+</head>
+<body>
+    <div class="container" id="main-container">
+        <span class="close-btn hidden" onclick="goBackToLogin()">✖</span>
+        <h3 id="login-title">로그인</h3>
+        <div class="btn-group">
+            <button id="student-login-btn" class="active" onclick="toggleLoginMode(true)">학생 로그인</button>
+            <button id="teacher-login-btn" onclick="toggleLoginMode(false)">교사 로그인</button>
+        </div>
+        <div id="login-forms">
+            <form id="student-login-form">
+                <div class="input-group">
+                    <input type="text" id="student-login-id" name="student_id" placeholder="학번" required>
+                    <input type="text" id="student-login-name" name="student_name" placeholder="이름" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="student-login-password" name="password" placeholder="비밀번호" required>
+                    <span class="toggle-password" onclick="togglePassword('student-login-password')">👁️</span>
+                </div>
+                <button type="submit" onclick="loginStudent()">로그인</button>
+            </form>
+            <form id="teacher-login-form" class="hidden">
+                <div class="input-group">
+                    <input type="text"  id="teacher-login-name" name="teacher_name" placeholder="성함" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="teacher-login-password" name="password" placeholder="비밀번호" required>
+                    <span class="toggle-password" onclick="togglePassword('teacher-login-password')">👁️</span>
+                </div>
+                <button type="submit" onclick="loginTeacher()()">로그인</button>
+            </form>
+            <p class="signup-btn" onclick="showSignupOptions()">회원가입</p>
+        </div>
+    </div>
+    <div class="container hidden" id="signup-container">
+        <span class="close-btn" onclick="goBackToLogin()">✖</span>
+        <h3>회원가입</h3>
+        <div class="btn-group">
+            <button id="student-signup-btn" class="active" onclick="toggleSignupMode(true)">학생 회원가입</button>
+            <button id="teacher-signup-btn" onclick="toggleSignupMode(false)">교사 회원가입</button>
+        </div>
+        <form id="student-signup-form">
+            <div class="input-group">
+                <input type="text" id="student-register-id" name="student_id" placeholder="학번" required>
+                <input type="text" id="student-register-name" name="student_name" placeholder="이름" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="student-register-password" name="password" placeholder="비밀번호" required>
+                <span class="toggle-password" onclick="togglePassword('student-register-password')">👁️</span>
+            </div>
+            <button type="submit" onclick="registerStudent()">회원가입</button>
+        </form>
+        <form id="teacher-signup-form" class="hidden">
+            <div class="input-group">
+                <input type="password" id="teacher-register-key"name="security_key" placeholder="보안 키" required>
+                <input type="text" id="teacher-register-name" name="teacher_name" placeholder="성함" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="teacher-register-password" name="password" placeholder="비밀번호" required>
+                <span class="toggle-password" onclick="togglePassword('teacher-register-password')">👁️</span>
+            </div>
+            <button type="submit" onclick="registerTeacher()">회원가입</button>
+        </form>
+    </div>
+    <script src="/js/login.js"></script>
+</body>
+</html>
+

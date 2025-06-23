@@ -1,0 +1,159 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f9f9f9;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  background: #fff;
+}
+
+.header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 18px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 8px;
+  margin-top: 30px;
+}
+
+.link-item {
+  font-size: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid #eee;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.link-item:hover {
+  background-color: #f0f0f0;
+}
+
+.activity-screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #fff;
+  z-index: 999;
+  display: none;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.activity-header {
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #007bff;
+}
+
+.activity-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.post {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.post:hover {
+  background-color: #f7f7f7;
+}
+
+.popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-inner {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+}
+
+.popup-inner label {
+  display: block;
+  margin-top: 10px;
+}
+
+.popup-inner input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.popup-buttons {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.popup-buttons button {
+  padding: 6px 12px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.popup-buttons button:last-child {
+  background: #007bff;
+  color: white;
+}
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;                  /* 화면 가운데 기준점 */
+  transform: translateX(-50%); /* 정가운데로 이동 */
+  width: 100vw;               /* 뷰포트 전체 너비 */     /* 최대 너비 제한 */
+  background: #fff;
+  border-top: 1px solid #ccc;
+  display: flex;
+  justify-content: space-around;
+  padding: 6px 0;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.bottom-nav button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #888;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.bottom-nav button.active {
+  color: #ffc107;
+}
+
+.bottom-nav button div {
+  font-size: 12px;
+  margin-top: 2px;
+}

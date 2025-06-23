@@ -1,0 +1,579 @@
+body {
+    margin: 0;
+    font-family: 'Noto Sans', 'Apple SD Gothic Neo', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+header {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.search-bar {
+    width: 100%;
+    margin: 10px;
+}
+
+.filters {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.post-title {
+    font-weight: bold;
+    font-size: 17px;
+    color: #222;
+    margin: 10px 0 4px 0;
+}
+
+.post-content {
+    margin-top: 4px;
+    white-space: pre-line;
+}
+
+.post-list {
+    padding: 10px;
+    min-height: 300px;
+    padding-bottom: 100px;
+}
+
+.profile-pic {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.post {
+    background: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 16px;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.post-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #888;
+}
+
+.post-icons-top button {
+    margin-left: 8px;
+}
+
+.post-body {
+    display: block; /* 기존 flex 정렬 제거 */
+    text-align: left; /* 왼쪽 정렬 */
+    margin-top: 8px; /* 제목과 내용 사이 간격 추가 */
+}
+
+.post-body small {
+    color: gray;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.post-footer {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.post-actions button,
+.post-footer button {
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #333;
+}
+
+.floating-button {
+    position: fixed;
+    bottom: 96px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+} 
+
+.floating-button:hover {
+    background-color: #0056b3;
+}
+
+.plus-symbol {
+    position: relative;
+    top: -2px;
+}
+
+.post-actions button.liked {
+    background: #ffeaea;
+    border-color: #ffaaaa;
+    color: #d32f2f;
+}
+
+.post-actions button.bookmarked {
+    background: #e7f3ff;
+    border-color: #9ecbff;
+    color: #2b6cb0;
+}
+
+.like-section {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.comment-like-button {
+    font-size: 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+    color: gray; /* ✅ 기본 색상 (좋아요 안 누른 상태) */
+}
+
+.comment-like-button.liked {
+    color: red; /* ✅ 좋아요를 누른 상태 */
+}
+
+.like-count {
+    margin-left: 6px;
+}
+
+.comment {
+    background-color: #ffffff;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.comment-header {
+    font-size: 13px;
+    color: #666;
+}
+
+.comment-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.comment-actions {
+    display: flex;
+    justify-content: space-between; /* 버튼을 양 끝으로 배치 */
+    align-items: center;
+}
+
+.comments-section {
+    margin-top: 10px;
+    display: none;
+}
+
+.comments-section input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+.comment-input-wrap {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.comments div {
+    background: #f9f9f9;
+    padding: 5px 8px;
+    margin-top: 3px;
+    border-radius: 6px;
+}
+
+.comment-actions .reply-button {
+    margin-left: 10px;
+}
+
+.comment-like-button, .reply-button {
+    border: none; /* 테두리 제거 */
+    background: none; /* 배경 제거 */
+    padding: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.comment-input-container {
+    display: flex !important;
+    flex-direction: row !important; /* ✅ 입력칸과 버튼을 같은 줄에 배치 */
+    align-items: center !important; /* 버튼과 입력칸 높이를 맞추기 */
+    gap: 8px !important; /* 버튼과 입력칸 간격 */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+.comment-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.comment-input {
+    flex-grow: 1;
+    width: 100%;
+    min-height: 36px;
+    max-height: 120px; /* ✅ 일정 높이까지 확장 */
+    overflow-y: auto; /* ✅ 넘칠 경우 스크롤 추가 */
+    padding: 12px 48px 12px 12px; /* ✅ 오른쪽 공간 확보 (버튼 자리) */
+    border: none;
+    font-size: 16px;
+    resize: none; /* ✅ 사용자가 수동으로 크기 변경하지 못하도록 설정 */
+    overflow-wrap: break-word; /* ✅ 긴 단어도 자동으로 줄바꿈 */
+    word-wrap: break-word; /* ✅ 줄바꿈 지원 */
+}
+
+.submit-comment-button {
+    height: 36px !important; /* 🔥 입력칸과 동일한 높이 */
+    padding: 10px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.comment-input,
+.submit-comment-button {
+    box-sizing: border-box; /* ✅ 패딩과 테두리 포함하여 높이 계산 */
+}
+
+.submit-comment-button:hover {
+    background-color: #0056b3; /* ✅ 마우스 오버 시 색상 변경 */
+}
+
+.submit-comment-button:active {
+    transform: scale(0.95); /* ✅ 버튼을 살짝 눌리는 느낌 추가 */
+}
+
+.reply .comment-actions {
+    display: flex;
+    justify-content: space-between; /* 내용과 버튼을 양 끝으로 배치 */
+    align-items: center;
+}
+
+.reply .comment-like-button {
+    margin-left: auto; /* ✅ 오른쪽으로 이동 */
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    display: none;
+    width: 90%;
+    max-width: 600px;
+    display: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0, 1);
+}
+
+.modal input, .modal textarea {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.replies {
+    margin-left: 20px;
+    margin-top: 6px;
+    border-left: 2px solid #f0f0f0;
+    padding-left: 10px;
+}
+
+.reply {
+    background: #f9f9f9;
+    padding: 6px 8px;
+    margin-top: 6px;
+    border-radius: 6px;
+}
+
+.reply-input {
+    width: 100%;
+    height: auto; /* ✅ 텍스트 길이에 맞춰 높이 조정 */
+    min-height: 36px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none; /* ✅ 사용자가 수동으로 크기 변경하지 못하도록 설정 */
+    overflow-wrap: break-word; /* ✅ 긴 단어도 자동으로 줄바꿈 */
+    word-wrap: break-word;
+    white-space: pre-wrap; /* ✅ 줄바꿈 유지 */
+}
+
+.submit-reply-button {
+    height: 36px; /* 🔥 대댓글 입력칸과 동일한 높이 */
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+}
+
+.comment > div:first-child {
+    margin-bottom: 4px;
+}
+
+.reply button {
+    margin-left: auto; /* 대댓글 버튼을 오른쪽으로 이동 */
+}
+
+/* 돌아가기 버튼 */
+#backToListBtn {
+    background: none;
+    color: #d32f2f;
+    border: none;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.comment-like-button span {
+    display: none; /* 숫자 숨기기 */
+}
+
+#post-title, #post-content {
+    width: 100%;
+    resize: none; /* 🔥 사용자가 크기 변경 못하도록 설정 */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap; /* 🔥 자동 줄바꿈 */
+}
+
+textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  resize: vertical; /* 사용자가 높이 조절 가능 */
+  box-sizing: border-box;
+  margin-bottom: 14px;
+  border: 1px solid #ccc;
+  border-radius : 6px;
+  background-color : #fafafa;
+}
+
+.textarea.title {
+  height: 80px;
+}
+
+.textarea.content {
+  height: 300px;
+}
+
+.modal-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modal-buttons button:first-child {
+  background-color: #007bff;
+  color: white;
+}
+
+modal-buttons button:last-child {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.modal-buttons button:first-child:hover {
+  background-color: #0056b3;
+}
+
+.modal-buttons button:last-child:hover {
+  background-color: #e0e0e0;
+}
+
+/* 인기 게시판, 최신순 */
+.filters {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  gap: 10px;
+}
+
+/* 공통 버튼 스타일 */
+.filter-btn {
+  flex: 1;
+  padding: 16px 0;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  color: white;
+}
+
+/* 좌측 버튼 (인기 게시판) */
+.filter-btn.left {
+  background: linear-gradient(135deg, #ff5f6d, #ffc371);
+}
+
+/* 우측 버튼 (최신순) */
+.filter-btn.right {
+  background: linear-gradient(135deg, #36d1dc, #5b86e5);
+}
+
+.filter-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.filter-btn:active {
+  transform: scale(0.98);
+}
+
+.post-menu-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: black;  /* 또는 원하는 색상 */
+    z-index: 10;
+}
+.post-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.comment-menu-button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+.comment-menu {
+    z-index: 10;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.like-icon, .bookmark-icon , .comment-toggle-icon{
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.like-icon:hover, .bookmark-icon:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .submit-comment-button,
+  .submit-reply-button {
+    width: auto !important;      /* ❗너비 고정 해제 */
+    font-size: 13px !important;  /* ❗텍스트 크기 축소 */
+    padding: 6px 12px !important;/* ❗버튼 크기 축소 */
+    height: auto !important;
+    border-radius: 6px;
+  }
+
+  .comment-input-container {
+    flex-direction: row !important; /* 입력창 + 버튼 한 줄 정렬 */
+    align-items: center;
+    gap: 6px;
+  }
+
+  .comment-input {
+    font-size: 14px;
+    padding: 8px 12px;
+    flex: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  #post-title {
+    height: 40px;
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  #post-content {
+    height: 160px;
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .comment-input {
+    font-size: 13px !important;
+    padding: 6px 10px !important;
+    min-height: 28px !important;
+  }
+
+  .submit-comment-button,
+  .submit-reply-button {
+    font-size: 12px !important;
+    padding: 6px 10px !important;
+    height: auto !important;
+  }
+
+  textarea.textarea.title {
+    height: 40px;
+    font-size: 13px;
+  }
+
+  textarea.textarea.content {
+    height: 160px;
+    font-size: 13px;
+  }
+}
