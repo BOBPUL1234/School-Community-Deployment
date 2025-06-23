@@ -34,7 +34,9 @@ async function createDatabaseAndTable() {
   await connection.end();
 }
 
-createDatabaseAndTable();
+createDatabaseAndTable()
+  .then(() => console.log("✅ timetable DB 초기화 완료"))
+  .catch(err => console.error("❌ timetable DB 초기화 실패:", err));
 
 router.get('/:user_id', async (req, res) => {
   const user_id = req.params.user_id;
