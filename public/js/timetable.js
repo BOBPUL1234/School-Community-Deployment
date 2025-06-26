@@ -201,7 +201,7 @@ function updateCell(cell) {
   const cellKey = cell.dataset.cell;
   const userId = localStorage.getItem('userId');
 
-  fetch('${BASE_URL}/time/save', {
+  fetch(`${BASE_URL}/time/save`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ user_id: userId, cell_key: cellKey, subject: newText })
@@ -240,7 +240,7 @@ function setupTableCells() {
         const cellKey = cell.dataset.cell;
         const userId = localStorage.getItem('userId');
 
-        fetch('${BASE_URL}/time/save', {
+        fetch(`${BASE_URL}/time/save`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ user_id: userId, cell_key: cellKey, subject: '' })
