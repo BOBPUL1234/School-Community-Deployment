@@ -1,3 +1,7 @@
+const BASE_URL = window.location.hostname.includes("localhost")
+  ? "http://localhost:3000"
+  : "https://your-backend-service.onrender.com";
+
 let posts = [];  // 🔧 모든 함수가 접근 가능하도록
 let currentPostIndex = null;  // 🔧 반드시 최상단에 선언되어야 함
 
@@ -5,7 +9,7 @@ const postModal = document.getElementById("postModal");
 
 async function loadPostsFromServer() {
     try {
-        const response = await fetch('http://localhost:3000/board/posts'); // ✅ 서버에서 데이터 요청
+        const response = await fetch('${BASE_URL}/board/posts'); // ✅ 서버에서 데이터 요청
         posts = await response.json(); // 🔥 서버에서 불러온 데이터를 posts 배열에 저장
         console.log("✅ 서버에서 데이터 불러오기 성공:", posts);
         renderPostList(); // 🔥 화면에 데이터 다시 렌더링
@@ -285,7 +289,7 @@ function nestComments(flatComments) {
 
 async function loadCommentsForPost(postId) {
     try {
-        const response = await fetch(`http://localhost:3000/comments/${postId}`);
+        const response = await fetch(`${BASE_URL}/comments/${postId}`);
         const data = await response.json();
 
         if (Array.isArray(data)) {
@@ -468,7 +472,7 @@ function renderReplies(replies, container) {
 
 async function loadPostsFromServer() {
     try {
-        const response = await fetch('http://localhost:3000/board/posts');
+        const response = await fetch('${BASE_URL}/board/posts');
 
         if (!response.ok) {
             throw new Error(`❌ 서버 응답 오류: ${response.status}`);
@@ -509,7 +513,7 @@ async function addPost() {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/board/post', {
+        const response = await fetch('${BASE_URL}/board/post', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ title, content })  // 🔥 created_at 포함
@@ -542,7 +546,7 @@ function toggleComments(btn) {
 
 document.addEventListener("DOMContentLoaded", async function () {
     try {
-        const response = await fetch('http://localhost:3000/board/posts');
+        const response = await fetch('${BASE_URL}/board/posts');
         posts = await response.json();
         console.log("✅ 서버에서 불러온 게시글:", posts);
         if (posts.length === 0) {
@@ -574,7 +578,7 @@ async function submitComment(event, input) {
         const postId = posts[currentPostIndex].id;
 
         try {
-            const response = await fetch('http://localhost:3000/comments', {
+            const response = await fetch('${BASE_URL}/comments', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -616,7 +620,7 @@ async function submitReply(event, input) {
         const parentId = parseInt(commentDiv.dataset.id);  // 댓글의 고유 ID로 연결
 
         try {
-            const response = await fetch("http://localhost:3000/comments", {
+            const response = await fetch("${BASE_URL}/comments", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -657,7 +661,7 @@ async function submitCommentByButton(button) {
 
     try {
         // ✅ 서버로 댓글 저장 요청
-        const response = await fetch('http://localhost:3000/comments', {
+        const response = await fetch('${BASE_URL}/comments', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -764,7 +768,7 @@ async function toggleLike(btn) {
     const targetId = parent.dataset.id;
 
     try {
-        await fetch("http://localhost:3000/likes", {
+        await fetch("${BASE_URL}/likes", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ targetType, targetId, liked: isLiked }),
@@ -779,7 +783,7 @@ async function deletePost(postId) {
     if (!confirm("이 게시글을 삭제하시겠습니까?")) return;
 
     try {
-        const res = await fetch(`http://localhost:3000/board/post/${postId}`, {
+        const res = await fetch(`${BASE_URL}/board/post/${postId}`, {
             method: "DELETE",
             credentials: "include"
         });
@@ -809,7 +813,7 @@ async function deleteComment(commentId) {
     if (!confirm("이 댓글을 삭제하시겠습니까?")) return;
 
     try {
-        const res = await fetch(`http://localhost:3000/comments/${commentId}`, {
+        const res = await fetch(`${BASE_URL}/comments/${commentId}`, {
             method: "DELETE",
             credentials: "include"
         });
@@ -833,7 +837,7 @@ async function toggleLikeImage(img) {
     const targetId = img.dataset.id;
 
     try {
-        const res = await fetch("http://localhost:3000/likes", {
+        const res = await fetch("${BASE_URL}/likes", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
