@@ -1,3 +1,7 @@
+const BASE_URL = window.location.hostname.includes("localhost")
+  ? "http://localhost:3000"
+  : "https://your-backend-service.onrender.com";
+
 let roomId = null;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -79,7 +83,7 @@ function renderMessages() {
   const userProfile = JSON.parse(localStorage.getItem("userProfile") || '{}');
   const userName = userProfile.userName || "이름 없음";
 
-  fetch(`http://localhost:3000/chat/messages?roomId=${roomId}`)
+  fetch(`${BASE_URL}/chat/messages?roomId=${roomId}`)
     .then(res => res.json())
     .then(data => {
       if (!data.success) return;
@@ -127,7 +131,7 @@ sendBtn.addEventListener("click", () => {
   const userProfile = JSON.parse(localStorage.getItem("userProfile") || '{}');
   const userName = userProfile.userName || "이름 없음";
 
-  fetch("http://localhost:3000/chat/messages/send", {
+  fetch("${BASE_URL}/chat/messages/send", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
