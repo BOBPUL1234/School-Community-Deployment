@@ -14,6 +14,10 @@ const db = mysql.createConnection({
   database: process.env.DB_NAME_SCHOOL
 });
 
+async function connectDB() {
+  return await mysql.createConnection(dbConfig);
+}
+
 // ✅ 학생 및 교사 초기 데이터 설정 (미리 지정된 값)
 const studentList = [
     { id: "1111", name: "배준형" },
@@ -87,42 +91,28 @@ const studentList = [
 ];
 
 const teacherSecurityKey = "TCH-2025-SECURE";
-const teacherList = ["성진", "김새하", "김진경", "박민지", "정민희", "곽민주", "이세민", "정재희", "이상용"];
+const teacherList = ["이세민"];
 
-// ✅ MySQL 연결
-db.connect((err) => {
-    if (err) return console.error("❌ MySQL 연결 오류:", err.message);
-    createStudentsTable();
-    createTeachersTable();
-});
-
-// ✅ students 테이블 자동 생성
-function createStudentsTable() {
-    const sql = `
-        CREATE TABLE IF NOT EXISTS students (
-            id VARCHAR(10) PRIMARY KEY,
-            name VARCHAR(50) NOT NULL,
-            password VARCHAR(255) NOT NULL
-        );
-    `;
-    db.query(sql, (err) => {
-        if (err) return console.error("❌ students 테이블 생성 오류:", err.message);
-    });
+// ✅ 테이블 생성
+async function initTables() {
+  const db = await connectDB();
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS students (
+      id VARCHAR(10) PRIMARY KEY,
+      name VARCHAR(50) NOT NULL,
+      password VARCHAR(255) NOT NULL
+    );
+  `);
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS teachers (
+      name VARCHAR(50) PRIMARY KEY,
+      password VARCHAR(255) NOT NULL,
+      security_key VARCHAR(20) NOT NULL
+    );
+  `);
+  await db.end();
 }
-
-// ✅ teachers 테이블 자동 생성
-function createTeachersTable() {
-    const sql = `
-        CREATE TABLE IF NOT EXISTS teachers (
-            name VARCHAR(50) PRIMARY KEY,
-            password VARCHAR(255) NOT NULL,
-            security_key VARCHAR(20) NOT NULL
-        );
-    `;
-    db.query(sql, (err) => {
-        if (err) return console.error("❌ teachers 테이블 생성 오류:", err.message);
-    });
-}
+initTables();
 
 // ✅ 학생 회원가입
 router.post("/signup/student", async (req, res) => {
