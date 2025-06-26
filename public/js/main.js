@@ -1,5 +1,9 @@
 //main.js
-fetch("/auth/profile")
+const BASE_URL = window.location.hostname.includes("localhost")
+  ? "http://localhost:3000"
+  : "https://your-backend-service.onrender.com";
+
+fetch("${BASE_URL}/auth/profile")
   .then(res => res.json())
   .then(data => {
     if (data.success) {
@@ -36,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let showPassword = false;
 
   // 페이지 로드 시 로컬스토리지에 저장된 급식 데이터가 있으면 화면에 표시
-fetch('/home/meals')
+fetch('${BASE_URL}/home/meals')
   .then(res => res.json())
   .then(meals => renderMeals(meals))
   .catch(err => console.error("❌ 급식표 조회 실패:", err));
@@ -103,7 +107,7 @@ fetch('/home/meals')
         meals[dateKey][t] = menu.length ? menu : ["없음"];
       }
 
-      fetch('/home/meals', {
+      fetch('${BASE_URL}/home/meals', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(meals),
@@ -188,7 +192,7 @@ function loadTasks() {
   const user_id = sessionStorage.getItem('user_id'); // 또는 고정 문자열
   if (!user_id) return;
 
-  fetch(`/home/planner/${selectedDate}`)
+  fetch(`${BASE_URL}/home/planner/${selectedDate}`)
     .then(res => res.json())
     .then(saved => {
       if (!Array.isArray(saved)) {
@@ -238,7 +242,7 @@ function addTask() {
   const user_id = sessionStorage.getItem('user_id');
   if (task === '') return;
 
-  fetch('/home/planner', {
+  fetch('${BASE_URL}/home/planner', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -253,12 +257,12 @@ function addTask() {
 }
 
 function deleteTask(id) {
-  fetch(`/home/planner/${id}`, { method: 'DELETE' })
+  fetch(`${BASE_URL}/home/planner/${id}`, { method: 'DELETE' })
     .then(() => loadTasks());
 }
 
 function toggleDone(id, checked) {
-  fetch(`/home/planner/done/${id}`, {
+  fetch(`${BASE_URL}/home/planner/done/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ done: checked })
