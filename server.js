@@ -66,7 +66,6 @@ const router = express.Router();
   // ✅ 라우터 연결 (비동기 처리)
   const authRoutes = require('./routes/auth');
   const timetableRouter = require('./routes/time');
-  const boardRoutes = require('./routes/board');
   const commentsRoutes = require('./routes/comments');
   const likesRouter = require("./routes/likes");
   const createAppRouter = require("./routes/home"); // 여기 중요!
