@@ -3,6 +3,9 @@ const express = require('express');
 const mysql = require('mysql2/promise');
 const router = express.Router();
 
+const { ensureDatabaseAndTables } = require("./routes/board");
+ensureDatabaseAndTables(); // 사실상 서버에서 한 번만 호출되면 됨
+
 const dbConfig = {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
