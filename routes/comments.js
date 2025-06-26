@@ -107,7 +107,6 @@ async function ensureCommentsTableHasNickname() {
 }
 
 (async () => {
-  await ensureTablesExist(); // 테이블 생성
   await ensurePostsTableHasAuthorId();  
   await ensureCommentsTableHasUserId();
   await ensureCommentsTableHasNickname();
