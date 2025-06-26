@@ -257,7 +257,7 @@ router.post("/bookmarks", async (req, res) => {
     const { targetId, bookmarked } = req.body;
     const userId = req.session?.user?.id;
 
-    if (!userId) return res.status(401).jso ({ message: "로그인 필요" });
+    if (!userId) return res.status(401).json ({ message: "로그인 필요" });
 
     try {
         const db = await connectDB();
