@@ -80,14 +80,14 @@ const mysql = require('mysql2/promise');
   app.use("/comments", commentsRoutes);
   app.use("/likes", likesRouter); 
   
-  // ✅ 비동기 라우터 연결 및 서버 시작
-  createAppRouter().then(homeRouter => {
+  const homeRouter = await createAppRouter();
     app.use("/home", homeRouter);
-  
-    app.listen(PORT, '0.0.0.0', () => {
-      console.log(`✅ 서버 실행됨: http://0.0.0.0:${PORT}`);
-    });
-  }).catch(err => {
+  } catch (err) {
     console.error("❌ homeRouter 초기화 실패:", err);
+    // 서버는 계속 실행하도록
+  }
+  
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`✅ 서버 실행됨: http://0.0.0.0:${PORT}`);
   });
 })();
