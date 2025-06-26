@@ -15,6 +15,22 @@ async function connectDB() {
   return connection;
 }
 
+async function ensureLikesTableExists() {
+  const db = await connectDB();
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS likes (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      user_id VARCHAR(50) NOT NULL,
+      target_id INT NOT NULL,
+      target_type ENUM('post', 'comment', 'reply') NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+  await db.end();
+}
+
+ensureLikesTableExists(); // 맨 앞에서 실행
+
 async function ensureLikesColumn(tableName) {
   const db = await connectDB();
   const [result] = await db.execute(`SHOW COLUMNS FROM ${tableName} LIKE 'likes'`);
