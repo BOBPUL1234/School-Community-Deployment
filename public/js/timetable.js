@@ -1,3 +1,6 @@
+const BASE_URL = window.location.hostname.includes("localhost")
+  ? "http://localhost:3000"
+  : "https://your-backend-service.onrender.com";
 
 let selectedSubject = null;
 let selectedClass = null;
@@ -157,7 +160,7 @@ function updateSelectedStyles() {
 //   const cellKey = cell.dataset.cell;
 //   const userId = localStorage.getItem('userId');
 
-//   fetch('/time/save', {
+//   fetch('${BASE_URL}/time/save', {
 //     method: 'POST',
 //     headers: { 'Content-Type': 'application/json' },
 //     body: JSON.stringify({
@@ -198,7 +201,7 @@ function updateCell(cell) {
   const cellKey = cell.dataset.cell;
   const userId = localStorage.getItem('userId');
 
-  fetch('/time/save', {
+  fetch('${BASE_URL}/time/save', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ user_id: userId, cell_key: cellKey, subject: newText })
@@ -237,7 +240,7 @@ function setupTableCells() {
         const cellKey = cell.dataset.cell;
         const userId = localStorage.getItem('userId');
 
-        fetch('/time/save', {
+        fetch('${BASE_URL}/time/save', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ user_id: userId, cell_key: cellKey, subject: '' })
@@ -252,7 +255,7 @@ async function loadSavedTimetable() {
   if (!userId) return;
 
   try {
-    const res = await fetch(`/time/${userId}`);
+    const res = await fetch(`${BASE_URL}/time/${userId}`);
     const timetable = await res.json();
 
     document.querySelectorAll('#timetable td[data-cell]').forEach(cell => {
