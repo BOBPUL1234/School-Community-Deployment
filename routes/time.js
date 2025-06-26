@@ -5,19 +5,22 @@ require('dotenv').config();
 
 // time.js
 async function createDatabaseAndTable() {
+  const baseConnection = await mysql.createConnection({
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD
+  });
+  await baseConnection.query(`CREATE DATABASE IF NOT EXISTS timetable`);
+  await baseConnection.end();
+  
   const connection = await mysql.createConnection({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME_TIMETABLE
+    database: 'timetable'
   });
-
-  // 1. 데이터베이스 만들기
-  await connection.query(`CREATE DATABASE IF NOT EXISTS timetable`);
-
-  // 2. timetable DB로 전환
-  await connection.changeUser({ database: 'timetable' });
 
   // 3. 테이블 만들기
   const sql = `
