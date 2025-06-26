@@ -9,7 +9,7 @@ const postModal = document.getElementById("postModal");
 
 async function loadPostsFromServer() {
     try {
-        const response = await fetch('${BASE_URL}/board/posts'); // ✅ 서버에서 데이터 요청
+        const response = await fetch(`${BASE_URL}/board/posts`); // ✅ 서버에서 데이터 요청
         posts = await response.json(); // 🔥 서버에서 불러온 데이터를 posts 배열에 저장
         console.log("✅ 서버에서 데이터 불러오기 성공:", posts);
         renderPostList(); // 🔥 화면에 데이터 다시 렌더링
@@ -472,7 +472,7 @@ function renderReplies(replies, container) {
 
 async function loadPostsFromServer() {
     try {
-        const response = await fetch('${BASE_URL}/board/posts');
+        const response = await fetch(`${BASE_URL}/board/posts`);
 
         if (!response.ok) {
             throw new Error(`❌ 서버 응답 오류: ${response.status}`);
@@ -513,7 +513,7 @@ async function addPost() {
     }
 
     try {
-        const response = await fetch('${BASE_URL}/board/post', {
+        const response = await fetch(`${BASE_URL}/board/post`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ title, content })  // 🔥 created_at 포함
@@ -546,7 +546,7 @@ function toggleComments(btn) {
 
 document.addEventListener("DOMContentLoaded", async function () {
     try {
-        const response = await fetch('${BASE_URL}/board/posts');
+        const response = await fetch(`${BASE_URL}/board/posts`);
         posts = await response.json();
         console.log("✅ 서버에서 불러온 게시글:", posts);
         if (posts.length === 0) {
@@ -578,7 +578,7 @@ async function submitComment(event, input) {
         const postId = posts[currentPostIndex].id;
 
         try {
-            const response = await fetch('${BASE_URL}/comments', {
+            const response = await fetch(`${BASE_URL}/comments`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -620,7 +620,7 @@ async function submitReply(event, input) {
         const parentId = parseInt(commentDiv.dataset.id);  // 댓글의 고유 ID로 연결
 
         try {
-            const response = await fetch("${BASE_URL}/comments", {
+            const response = await fetch(`${BASE_URL}/comments`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -661,7 +661,7 @@ async function submitCommentByButton(button) {
 
     try {
         // ✅ 서버로 댓글 저장 요청
-        const response = await fetch('${BASE_URL}/comments', {
+        const response = await fetch(`${BASE_URL}/comments`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -768,7 +768,7 @@ async function toggleLike(btn) {
     const targetId = parent.dataset.id;
 
     try {
-        await fetch("${BASE_URL}/likes", {
+        await fetch(`${BASE_URL}/likes`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ targetType, targetId, liked: isLiked }),
@@ -837,7 +837,7 @@ async function toggleLikeImage(img) {
     const targetId = img.dataset.id;
 
     try {
-        const res = await fetch("${BASE_URL}/likes", {
+        const res = await fetch(`${BASE_URL}/likes`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
