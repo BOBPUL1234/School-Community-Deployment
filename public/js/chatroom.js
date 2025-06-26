@@ -131,7 +131,7 @@ sendBtn.addEventListener("click", () => {
   const userProfile = JSON.parse(localStorage.getItem("userProfile") || '{}');
   const userName = userProfile.userName || "이름 없음";
 
-  fetch("${BASE_URL}/chat/messages/send", {
+  fetch(`${BASE_URL}/chat/messages/send`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
