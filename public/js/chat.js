@@ -165,7 +165,7 @@ filtered.forEach(room => {
     const userProfile = JSON.parse(localStorage.getItem("userProfile") || '{}');
     const userName = userProfile.userName || "이름 없음";
 
-    fetch("${BASE_URL}/chat/participants/join", {
+    fetch(`${BASE_URL}/chat/participants/join`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -215,7 +215,7 @@ document.getElementById("createBtn").addEventListener("click", () => {
   };
 
   // ✅ DB에 저장이 완료된 뒤 joinedRooms에 추가
-  fetch("${BASE_URL}/chat/rooms/create", {
+  fetch(`${BASE_URL}/chat/rooms/create`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newRoom)
