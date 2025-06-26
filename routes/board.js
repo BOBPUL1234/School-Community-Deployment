@@ -18,68 +18,72 @@ async function connectDB() {
     return connection;
 }
 
+// 파일 최상단
+const mysql = require("mysql2/promise");
+require('dotenv').config();
+
 async function ensureDatabaseAndTables() {
-    // 1단계: MySQL 서버에 연결 (DB 없음)
-    const rootConnection = await mysql.createConnection({
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD
-    });
+  const base = await mysql.createConnection({
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+  });
 
-    // 2단계: DB 없으면 생성
-    await rootConnection.query("CREATE DATABASE IF NOT EXISTS " + process.env.DB_NAME_COMMUNITY);
+  await base.query(`CREATE DATABASE IF NOT EXISTS community`);
+  await base.end();
 
-    // 3단계: community DB로 다시 연결
-    const db = await mysql.createConnection({
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME_COMMUNITY
-    });
+  const db = await mysql.createConnection({
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: 'community'
+  });
 
-    // 4단계: 필요한 테이블 생성
-    if (module.filename.includes("board.js")) {
-        await db.execute(`
-            CREATE TABLE IF NOT EXISTS posts (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                title VARCHAR(255) NOT NULL,
-                content TEXT NOT NULL,
-                author_id VARCHAR(50) NOT NULL,
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            )
-        `);
-    }
+  // ✅ posts 테이블
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS posts (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      title VARCHAR(255) NOT NULL,
+      content TEXT NOT NULL,
+      author_id VARCHAR(50) NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
 
-    await db.execute(`
-        CREATE TABLE IF NOT EXISTS bookmarks (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            user_id VARCHAR(50) NOT NULL,
-            post_id INT NOT NULL,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-            UNIQUE KEY unique_bookmark (user_id, post_id),
-            FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
-        )
-    `);
+  // ✅ comments 테이블
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS comments (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      post_id INT NOT NULL,
+      parent_id INT DEFAULT NULL,
+      user_id VARCHAR(50) NOT NULL,
+      nickname VARCHAR(20) NOT NULL,
+      text TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (post_id) REFERENCES posts(id),
+      FOREIGN KEY (parent_id) REFERENCES comments(id) ON DELETE CASCADE
+    )
+  `);
 
-    if (module.filename.includes("comments.js")) {
-        await db.execute(`
-            CREATE TABLE IF NOT EXISTS comments (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                post_id INT NOT NULL,
-                parent_id INT DEFAULT NULL,
-                text TEXT NOT NULL,
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (post_id) REFERENCES posts(id),
-                FOREIGN KEY (parent_id) REFERENCES comments(id) ON DELETE CASCADE
-            )
-        `);
-    }
+  // ✅ likes 테이블
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS likes (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      user_id VARCHAR(50) NOT NULL,
+      target_type ENUM('post', 'comment', 'reply') NOT NULL,
+      target_id INT NOT NULL,
+      is_bookmarked TINYINT(1) DEFAULT 0,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      UNIQUE KEY unique_like (user_id, target_type, target_id)
+    )
+  `);
 
-    await db.end();
-    await rootConnection.end();
+  await db.end();
 }
+
+module.exports = { ensureDatabaseAndTables };
 
 async function ensureBookmarkColumn() {
     const db = await connectDB();
