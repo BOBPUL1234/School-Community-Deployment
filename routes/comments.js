@@ -59,6 +59,7 @@ async function ensureTablesExist() {
     });
 
     await conn.query("CREATE DATABASE IF NOT EXISTS community");
+    await conn.changeUser({ database: 'community' });
     await conn.query("USE community");
 
     // posts 테이블 생성 (author_id 포함)
