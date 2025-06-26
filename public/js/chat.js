@@ -1,3 +1,7 @@
+const BASE_URL = window.location.hostname.includes("localhost")
+  ? "http://localhost:3000"
+  : "https://your-backend-service.onrender.com";
+
 document.addEventListener("DOMContentLoaded", () => {
   const tabs = {
     list: document.getElementById("list"),
@@ -161,7 +165,7 @@ filtered.forEach(room => {
     const userProfile = JSON.parse(localStorage.getItem("userProfile") || '{}');
     const userName = userProfile.userName || "이름 없음";
 
-    fetch("http://localhost:3000/chat/participants/join", {
+    fetch("${BASE_URL}/chat/participants/join", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -175,7 +179,7 @@ filtered.forEach(room => {
     saveRooms();
     alert("가입되었습니다.");
 
-    fetch(`http://localhost:3000/chat/participants/rooms?userId=${userId}`)
+    fetch(`${BASE_URL}/chat/participants/rooms?userId=${userId}`)
       .then(res => res.json())
       .then(data => {
         if (data.success) {
@@ -211,7 +215,7 @@ document.getElementById("createBtn").addEventListener("click", () => {
   };
 
   // ✅ DB에 저장이 완료된 뒤 joinedRooms에 추가
-  fetch("http://localhost:3000/chat/rooms/create", {
+  fetch("${BASE_URL}/chat/rooms/create", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newRoom)
