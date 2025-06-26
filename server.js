@@ -18,8 +18,7 @@ const mysql = require('mysql2/promise');
       port: process.env.DB_PORT,
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD
-    });
-
+   }
     await connection.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME_SCHOOL}\``);
     console.log(`✅ '${process.env.DB_NAME_SCHOOL}' 데이터베이스 생성 또는 확인 완료`);
     await connection.end();
@@ -80,13 +79,20 @@ const mysql = require('mysql2/promise');
   app.use("/comments", commentsRoutes);
   app.use("/likes", likesRouter); 
   
-  const homeRouter = await createAppRouter();
+  try {
+    await ensureDatabaseAndTables();
+    console.log("✅ community DB 및 테이블 준비 완료");
+  } catch (err) {
+    console.error("❌ community DB 준비 실패:", err);
+  }
+
+  try {
+    const homeRouter = await createAppRouter();
     app.use("/home", homeRouter);
   } catch (err) {
     console.error("❌ homeRouter 초기화 실패:", err);
-    // 서버는 계속 실행하도록
   }
-  
+
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`✅ 서버 실행됨: http://0.0.0.0:${PORT}`);
   });
