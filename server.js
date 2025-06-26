@@ -97,8 +97,3 @@ const router = express.Router();
     console.log(`✅ 서버 실행됨: http://0.0.0.0:${PORT}`);
   });
 })();
-
-module.exports = {
-  router,
-  ensureDatabaseAndTables
-};
