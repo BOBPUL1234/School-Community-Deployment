@@ -3,10 +3,11 @@ const mysql = require('mysql2');
 const router = express.Router();
 
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '1234',
-  database: 'school_db'
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME_SCHOOL
 });
 
 // 테이블 생성
