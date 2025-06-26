@@ -1,6 +1,6 @@
 const BASE_URL = window.location.hostname.includes("localhost")
   ? "http://localhost:3000"
-  : "https://your-backend-service.onrender.com";
+  : "https://school-community-deployment-1.onrender.com";
 
 function togglePassword(id) {
     const field = document.getElementById(id);
