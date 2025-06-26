@@ -18,7 +18,7 @@ const mysql = require('mysql2/promise');
       port: process.env.DB_PORT,
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD
-   }
+   });
     await connection.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME_SCHOOL}\``);
     console.log(`✅ '${process.env.DB_NAME_SCHOOL}' 데이터베이스 생성 또는 확인 완료`);
     await connection.end();
