@@ -6,13 +6,13 @@ const bcrypt = require('bcryptjs');
 const router = express.Router();
 
 // ✅ MySQL DB 연결 설정
-const db = mysql.createConnection({
+const dbConfig = {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME_SCHOOL
-});
+};
 
 async function connectDB() {
   return await mysql.createConnection(dbConfig);
