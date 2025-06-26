@@ -9,7 +9,7 @@ const cors = require('cors');
 const session = require('express-session');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // ✅ CORS 설정
 app.use(cors({
@@ -60,8 +60,8 @@ app.use("/likes", likesRouter);
 createAppRouter().then(homeRouter => {
   app.use("/home", homeRouter);
 
-  app.listen(PORT, () => {
-    console.log(`http://localhost:${PORT}`);
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`✅ 서버 실행됨: http://0.0.0.0:${PORT}`);
   });
 }).catch(err => {
   console.error("❌ homeRouter 초기화 실패:", err);
