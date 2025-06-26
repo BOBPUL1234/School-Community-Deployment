@@ -98,7 +98,7 @@ function loginStudent() {
         return;
     }
 
-    fetch(${BASE_URL}/auth/login/student", {
+    fetch("${BASE_URL}/auth/login/student", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
