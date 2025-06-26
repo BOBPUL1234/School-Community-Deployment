@@ -9,7 +9,6 @@ const postModal = document.getElementById("postModal");
 
 async function loadPostsFromServer() {
     try {
-        const response = await fetch(`${BASE_URL}/board/posts`); // ✅ 서버에서 데이터 요청
         posts = await response.json(); // 🔥 서버에서 불러온 데이터를 posts 배열에 저장
         console.log("✅ 서버에서 데이터 불러오기 성공:", posts);
         renderPostList(); // 🔥 화면에 데이터 다시 렌더링
@@ -610,7 +609,7 @@ async function submitReply(event, input) {
         return;
     }
 
-    if (event.key === "Enter" || event.type === "click") {
+    if ((event.key && event.key === "Enter") || event.type === "click") {
         const text = input.value.trim();
         if (!text) return;
 
