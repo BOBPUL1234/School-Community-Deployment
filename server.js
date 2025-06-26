@@ -9,6 +9,7 @@ const cors = require('cors');
 const session = require('express-session');
 const { router: boardRoutes, ensureDatabaseAndTables } = require("./routes/board"); // 또는 ensureTables.js
 const mysql = require('mysql2/promise');
+const router = express.Router();
 
 //DB 생성 로직 (school_db 없으면 자동 생성)
 (async () => {
