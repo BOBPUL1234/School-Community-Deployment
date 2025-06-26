@@ -1,6 +1,6 @@
 const BASE_URL = window.location.hostname.includes("localhost")
   ? "http://localhost:3000"
-  : "https://your-backend-service.onrender.com";
+  : "https://school-community-deployment-1.onrender.com";
 
 let posts = [];  // 🔧 모든 함수가 접근 가능하도록
 let currentPostIndex = null;  // 🔧 반드시 최상단에 선언되어야 함
