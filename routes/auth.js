@@ -116,142 +116,151 @@ initTables();
 
 // ✅ 학생 회원가입
 router.post("/signup/student", async (req, res) => {
-    const { id, name, password } = req.body;
-    if (!id || !name || !password) return res.json({ success: false, message: "❌ 모든 정보를 입력하세요." });
+  const { id, name, password } = req.body;
+  if (!id || !name || !password) return res.json({ success: false, message: "❌ 모든 정보를 입력하세요." });
 
-    // 🔍 사전 등록된 학생인지 확인
-    const registeredStudent = studentList.find(student => student.id === id && student.name === name);
-    if (!registeredStudent) return res.json({ success: false, message: "❌ 사전 등록된 학생이 아닙니다." });
+  const registeredStudent = studentList.find(s => s.id === id && s.name === name);
+  if (!registeredStudent) return res.json({ success: false, message: "❌ 사전 등록된 학생이 아닙니다." });
 
-    // 🔍 중복 가입 확인
-    db.query("SELECT * FROM students WHERE id = ?", [id], async (err, results) => {
-        if (err) return res.json({ success: false, message: "❌ 데이터베이스 오류: " + err.message });
-        if (results.length > 0) return res.json({ success: false, message: "❌ 이미 가입된 학생입니다." });
+  try {
+    const db = await connectDB();
+    const [results] = await db.query("SELECT * FROM students WHERE id = ?", [id]);
+    if (results.length > 0) return res.json({ success: false, message: "❌ 이미 가입된 학생입니다." });
 
-        // 🔒 비밀번호 암호화 후 저장
-            const hashedPassword = await bcrypt.hash(password, 10);
-            db.query("INSERT INTO students (id, name, password) VALUES (?, ?, ?)", [id, name, hashedPassword], (err) => {
-                if (err) return res.json({ success: false, message: "❌ 데이터베이스 오류: " + err.message });
-                res.json({ success: true, message: "✅ 회원가입 성공! 로그인 페이지로 이동합니다.", redirect: "/" });
-        });
-    });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await db.query("INSERT INTO students (id, name, password) VALUES (?, ?, ?)", [id, name, hashedPassword]);
+
+    await db.end();
+    res.json({ success: true, message: "✅ 회원가입 성공! 로그인 페이지로 이동합니다.", redirect: "/" });
+  } catch (err) {
+    console.error("❌ 회원가입 오류:", err);
+    res.json({ success: false, message: "❌ 서버 오류: " + err.message });
+  }
 });
 
 // ✅ 교사 회원가입
 router.post("/signup/teacher", async (req, res) => {
-    const { name, password, securityKey } = req.body;
-    if (!name || !password || !securityKey) return res.json({ success: false, message: "❌ 모든 정보를 입력하세요." });
+  const { name, password, securityKey } = req.body;
+  if (!name || !password || !securityKey) return res.json({ success: false, message: "❌ 모든 정보를 입력하세요." });
 
-    // 🔍 보안키 확인
-    if (securityKey !== teacherSecurityKey) return res.json({ success: false, message: "❌ 보안키가 올바르지 않습니다." });
+  if (securityKey !== teacherSecurityKey) return res.json({ success: false, message: "❌ 보안키가 올바르지 않습니다." });
+  if (!teacherList.includes(name)) return res.json({ success: false, message: "❌ 사전 등록된 교사가 아닙니다." });
 
-    // 🔍 사전 등록된 교사인지 확인
-    if (!teacherList.includes(name)) return res.json({ success: false, message: "❌ 사전 등록된 교사가 아닙니다." });
+  try {
+    const db = await connectDB();
+    const [results] = await db.query("SELECT * FROM teachers WHERE name = ?", [name]);
+    if (results.length > 0) return res.json({ success: false, message: "❌ 이미 가입된 교사입니다." });
 
-    // 🔍 중복 가입 확인
-    db.query("SELECT * FROM teachers WHERE name = ?", [name], async (err, results) => {
-        if (err) return res.json({ success: false, message: "❌ 데이터베이스 오류: " + err.message });
-        if (results.length > 0) return res.json({ success: false, message: "❌ 이미 가입된 교사입니다." });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await db.query("INSERT INTO teachers (name, password, security_key) VALUES (?, ?, ?)", [name, hashedPassword, securityKey]);
 
-        // 🔒 비밀번호 암호화 후 저장
-        const hashedPassword = await bcrypt.hash(password, 10);
-        db.query("INSERT INTO teachers (name, password, security_key) VALUES (?, ?, ?)", [name, hashedPassword, securityKey], (err) => {
-            if (err) return res.json({ success: false, message: "❌ 데이터베이스 오류: " + err.message });
-            res.json({ success: true, message: "✅ 회원가입 성공! 로그인 페이지로 이동합니다.", redirect: "/" });
-        });
-    });
+    await db.end();
+    res.json({ success: true, message: "✅ 회원가입 성공! 로그인 페이지로 이동합니다.", redirect: "/" });
+  } catch (err) {
+    console.error("❌ 교사 회원가입 오류:", err);
+    res.json({ success: false, message: "❌ 서버 오류: " + err.message });
+  }
 });
 
 // ✅ 학생 로그인
 router.post("/login/student", async (req, res) => {
-    const { id, name, password } = req.body;
-    if (!id || !name || !password) return res.json({ success: false, message: "❌ 모든 정보를 입력하세요." });
+  const { id, name, password } = req.body;
+  if (!id || !name || !password) return res.json({ success: false, message: "❌ 모든 정보를 입력하세요." });
 
-    db.query("SELECT * FROM students WHERE id = ? AND name = ?", [id, name], async (err, results) => {
-        if (err) return res.json({ success: false, message: "❌ 오류 발생: " + err.message });
-        if (results.length === 0) return res.json({ success: false, message: "❌ 등록되지 않은 학생입니다." });
+  try {
+    const db = await connectDB();
+    const [results] = await db.query("SELECT * FROM students WHERE id = ? AND name = ?", [id, name]);
+    if (results.length === 0) return res.json({ success: false, message: "❌ 등록되지 않은 학생입니다." });
 
-        const storedHashedPassword = results[0]?.password;
-        if (!storedHashedPassword) return res.json({ success: false, message: "❌ 비밀번호가 저장되지 않았습니다." });
+    const storedPassword = results[0].password;
+    const isMatch = await bcrypt.compare(password, storedPassword);
 
-        const isMatch = await bcrypt.compare(password, storedHashedPassword);
-            req.session.user = {
-            id: results[0].id,
-            name: results[0].name,
-            role: 'student'
-        };
-        res.json({ success: isMatch, message: isMatch ? "✅ 로그인 성공!" : "❌ 비밀번호가 틀렸습니다.", redirect: "/main.html", user: { user_id: id } });
-    });
+    if (isMatch) {
+      req.session.user = { id: results[0].id, name: results[0].name, role: 'student' };
+    }
+
+    await db.end();
+    res.json({ success: isMatch, message: isMatch ? "✅ 로그인 성공!" : "❌ 비밀번호가 틀렸습니다.", redirect: "/main.html", user: { user_id: id, role: 'student' } });
+  } catch (err) {
+    console.error("❌ 로그인 오류:", err);
+    res.json({ success: false, message: "❌ 서버 오류: " + err.message });
+  }
 });
 
 // ✅ 교사 로그인
 router.post("/login/teacher", async (req, res) => {
-    const { name, password } = req.body;
-    if (!name || !password) return res.json({ success: false, message: "❌ 모든 정보를 입력하세요." });
+  const { name, password } = req.body;
+  if (!name || !password) return res.json({ success: false, message: "❌ 모든 정보를 입력하세요." });
 
-    db.query("SELECT * FROM teachers WHERE name = ?", [name], async (err, results) => {
-        if (err) return res.json({ success: false, message: "❌ 오류 발생: " + err.message });
-        if (results.length === 0) return res.json({ success: false, message: "❌ 등록되지 않은 교사입니다." });
+  try {
+    const db = await connectDB();
+    const [results] = await db.query("SELECT * FROM teachers WHERE name = ?", [name]);
+    if (results.length === 0) return res.json({ success: false, message: "❌ 등록되지 않은 교사입니다." });
 
-        const isMatch = await bcrypt.compare(password, results[0].password);
-        req.session.user = {
-            id: results[0].name,
-            name: results[0].name,
-            role: 'teacher'
-        };
+    const isMatch = await bcrypt.compare(password, results[0].password);
 
-        res.json({ success: isMatch, message: isMatch ? "✅ 로그인 성공!" : "❌ 비밀번호가 틀렸습니다.", redirect: "/main.html", user: { user_id: results[0].name } });
-    });
+    if (isMatch) {
+      req.session.user = { id: results[0].name, name: results[0].name, role: 'teacher' };
+    }
+
+    await db.end();
+    res.json({ success: isMatch, message: isMatch ? "✅ 로그인 성공!" : "❌ 비밀번호가 틀렸습니다.", redirect: "/main.html", user: { user_id: name, role: 'teacher' } });
+  } catch (err) {
+    console.error("❌ 교사 로그인 오류:", err);
+    res.json({ success: false, message: "❌ 서버 오류: " + err.message });
+  }
 });
 
+// ✅ 프로필 조회
 router.get("/profile", async (req, res) => {
   const user = req.session?.user;
   if (!user) return res.json({ success: false });
 
   try {
+    const db = await connectDB();
+    let results;
+
     if (user.role === "student") {
-      db.query("SELECT id, name FROM students WHERE id = ?", [user.id], (err, results) => {
-        if (err || results.length === 0) return res.json({ success: false });
-        res.json({ success: true, ...results[0], role: "student" });
-      });
+      [results] = await db.query("SELECT id, name FROM students WHERE id = ?", [user.id]);
+      if (results.length === 0) return res.json({ success: false });
+      res.json({ success: true, ...results[0], role: "student" });
     } else if (user.role === "teacher") {
-      db.query("SELECT name FROM teachers WHERE name = ?", [user.name], (err, results) => {
-        if (err || results.length === 0) return res.json({ success: false });
-        res.json({ success: true, id: results[0].name, name: results[0].name, role: "teacher" });
-      });
+      [results] = await db.query("SELECT name FROM teachers WHERE name = ?", [user.name]);
+      if (results.length === 0) return res.json({ success: false });
+      res.json({ success: true, id: results[0].name, name: results[0].name, role: "teacher" });
     }
-  } catch (e) {
-    console.error(e);
-    return res.json({ success: false });
+
+    await db.end();
+  } catch (err) {
+    console.error("❌ 프로필 조회 오류:", err);
+    res.json({ success: false });
   }
 });
 
+// ✅ 비밀번호 변경
 router.post("/change-password", async (req, res) => {
-    const { currentPassword, newPassword } = req.body;
-    const userId = req.session.userId; // ✅ 로그인한 사용자 ID 가져오기
+  const { currentPassword, newPassword } = req.body;
+  const userId = req.session?.user?.id;
 
-    if (!userId) return res.json({ success: false, message: "로그인이 필요합니다." });
+  if (!userId) return res.json({ success: false, message: "로그인이 필요합니다." });
 
-    db.query("SELECT password FROM students WHERE id = ?", [userId], async (err, results) => {
-        if (err || results.length === 0) {
-            return res.json({ success: false, message: "사용자를 찾을 수 없습니다." });
-        }
+  try {
+    const db = await connectDB();
+    const [results] = await db.query("SELECT password FROM students WHERE id = ?", [userId]);
+    if (results.length === 0) return res.json({ success: false, message: "사용자를 찾을 수 없습니다." });
 
-        const storedPassword = results[0].password;
-        const isMatch = await bcrypt.compare(currentPassword, storedPassword);
+    const isMatch = await bcrypt.compare(currentPassword, results[0].password);
+    if (!isMatch) return res.json({ success: false, message: "현재 비밀번호가 틀렸습니다." });
 
-        if (!isMatch) {
-            return res.json({ success: false, message: "현재 비밀번호가 틀렸습니다." });
-        }
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    await db.query("UPDATE students SET password = ? WHERE id = ?", [hashedNewPassword, userId]);
 
-        // 🔒 새 비밀번호 암호화 후 업데이트
-        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-        db.query("UPDATE students SET password = ? WHERE id = ?", [hashedNewPassword, userId], (updateErr) => {
-            if (updateErr) return res.json({ success: false, message: "비밀번호 변경 실패" });
-
-            res.json({ success: true, message: "✅ 비밀번호가 변경되었습니다. 프로필 화면으로 이동합니다.", redirect: "/profile.html" });
-        });
-    });
+    await db.end();
+    res.json({ success: true, message: "✅ 비밀번호가 변경되었습니다. 프로필 화면으로 이동합니다.", redirect: "/profile.html" });
+  } catch (err) {
+    console.error("❌ 비밀번호 변경 오류:", err);
+    res.json({ success: false, message: "서버 오류: " + err.message });
+  }
 });
 
 module.exports = router;
