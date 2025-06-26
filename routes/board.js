@@ -351,4 +351,7 @@ router.post("/bookmark", async (req, res) => {
   res.json({ success: true });
 });
 
-module.exports = router;
+module.exports = {
+  router,
+  ensureDatabaseAndTables
+};
