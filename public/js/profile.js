@@ -23,7 +23,7 @@ function openActivity(title) {
 
 async function loadMyPosts() {
     try {
-        const res = await fetch('${BASE_URL}/board/my-posts');
+        const res = await fetch(`${BASE_URL}/board/my-posts`);
         const posts = await res.json();
 
         const contentArea = document.getElementById("activityContent");
@@ -80,7 +80,7 @@ function closeNameChangePopup() {
 
 document.addEventListener("DOMContentLoaded", async () => {
     try {
-        const response = await fetch("${BASE_URL}/auth/profile", { credentials: "include" }); // ✅ 서버에서 사용자 정보 요청
+        const response = await fetch(`${BASE_URL}/auth/profile`, { credentials: "include" }); // ✅ 서버에서 사용자 정보 요청
         const data = await response.json();
 
         if (data.success) {
@@ -111,7 +111,7 @@ async function changePassword() {
     }
 
     try {
-        const response = await fetch("${BASE_URL}/auth/change-password", {
+        const response = await fetch(`${BASE_URL}/auth/change-password`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ currentPassword, newPassword }),
@@ -150,7 +150,7 @@ function closePostPopup() {
 
 async function loadLikedPosts() {
     try {
-        const res = await fetch("${BASE_URL}/likes/liked-posts", { credentials: "include" }); // 좋아요한 게시물 API
+        const res = await fetch(`${BASE_URL}/likes/liked-posts`, { credentials: "include" }); // 좋아요한 게시물 API
         const posts = await res.json();
 
         const contentArea = document.getElementById("activityContent");
@@ -178,7 +178,7 @@ async function loadLikedPosts() {
 
 async function loadBookmarkedPosts() {
     try {
-        const res = await fetch('${BASE_URL}/board/bookmarked-posts', { credentials: "include" });
+        const res = await fetch(`${BASE_URL}/board/bookmarked-posts`, { credentials: "include" });
         const type = res.headers.get("content-type");
         if (!res.ok || !type.includes("application/json")) {
             throw new Error("❌ 서버 응답이 JSON이 아님");
@@ -211,7 +211,7 @@ async function loadBookmarkedPosts() {
 
 async function loadMyComments() {
     try {
-        const res = await fetch('${BASE_URL}/comments/my-comments', { credentials: "include" });
+        const res = await fetch(`${BASE_URL}/comments/my-comments`, { credentials: "include" });
         const comments = await res.json();
 
         const content = document.getElementById("activityContent");
