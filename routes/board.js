@@ -79,6 +79,11 @@ async function ensureDatabaseAndTables() {
   await db.end();
 }
 
+module.exports = {
+  router,
+  ensureDatabaseAndTables // ✅ 이렇게 꼭 export 되어야 함
+};
+
 module.exports = { ensureDatabaseAndTables };
 
 async function ensureBookmarkColumn() {
