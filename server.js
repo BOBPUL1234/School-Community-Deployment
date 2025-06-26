@@ -7,7 +7,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
-
+const { ensureDatabaseAndTables } = require("./routes/board"); // 또는 ensureTables.js
 const mysql = require('mysql2/promise');
 
 //DB 생성 로직 (school_db 없으면 자동 생성)
@@ -45,6 +45,10 @@ const mysql = require('mysql2/promise');
     cookie: { secure: false, httpOnly: true }
   }));
   
+  ensureDatabaseAndTables()
+    .then(() => console.log("✅ 'community' 데이터베이스 및 테이블 준비 완료"))
+    .catch(err => console.error("❌ DB 준비 실패:", err));
+    
   // ✅ 기본 미들웨어
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
