@@ -46,7 +46,7 @@ function registerStudent() {
         return;
     }
 
-    fetch("${BASE_URL}/auth/signup/student", {
+    fetch(`${BASE_URL}/auth/signup/student`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, name, password })
@@ -72,7 +72,7 @@ function registerTeacher() {
         return;
     }
 
-    fetch("${BASE_URL}/auth/signup/teacher", {
+    fetch(`${BASE_URL}/auth/signup/teacher`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, password, securityKey })
@@ -98,7 +98,7 @@ function loginStudent() {
         return;
     }
 
-    fetch("${BASE_URL}/auth/login/student", {
+    fetch(`${BASE_URL}/auth/login/student`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -133,7 +133,7 @@ function loginTeacher() {
         return;
     }
 
-    fetch("${BASE_URL}/auth/login/teacher", {
+    fetch(`${BASE_URL}/auth/login/teacher`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
