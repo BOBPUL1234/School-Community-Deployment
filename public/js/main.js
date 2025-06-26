@@ -3,7 +3,7 @@ const BASE_URL = window.location.hostname.includes("localhost")
   ? "http://localhost:3000"
   : "https://school-community-deployment-1.onrender.com";
 
-fetch("${BASE_URL}/auth/profile")
+fetch(`${BASE_URL}/auth/profile`)
   .then(res => res.json())
   .then(data => {
     if (data.success) {
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let showPassword = false;
 
   // 페이지 로드 시 로컬스토리지에 저장된 급식 데이터가 있으면 화면에 표시
-fetch('${BASE_URL}/home/meals')
+fetch(`${BASE_URL}/home/meals`)
   .then(res => res.json())
   .then(meals => renderMeals(meals))
   .catch(err => console.error("❌ 급식표 조회 실패:", err));
@@ -107,7 +107,7 @@ fetch('${BASE_URL}/home/meals')
         meals[dateKey][t] = menu.length ? menu : ["없음"];
       }
 
-      fetch('${BASE_URL}/home/meals', {
+      fetch(`${BASE_URL}/home/meals`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(meals),
@@ -242,7 +242,7 @@ function addTask() {
   const user_id = sessionStorage.getItem('user_id');
   if (task === '') return;
 
-  fetch('${BASE_URL}/home/planner', {
+  fetch(`${BASE_URL}/home/planner`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
