@@ -1,7 +1,7 @@
 //main.js
 const BASE_URL = window.location.hostname.includes("localhost")
   ? "http://localhost:3000"
-  : "https://your-backend-service.onrender.com";
+  : "https://school-community-deployment-1.onrender.com";
 
 fetch("${BASE_URL}/auth/profile")
   .then(res => res.json())
