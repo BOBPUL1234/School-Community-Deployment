@@ -106,10 +106,12 @@ async function ensureCommentsTableHasNickname() {
     await db.end();
 }
 
-ensureTablesExist();
-ensurePostsTableHasAuthorId();  // ✅ 자동 생성 실행
-ensureCommentsTableHasUserId();
-ensureCommentsTableHasNickname();  // ✨ nickname 보장
+(async () => {
+  await ensureTablesExist(); // 테이블 생성
+  await ensurePostsTableHasAuthorId();  
+  await ensureCommentsTableHasUserId();
+  await ensureCommentsTableHasNickname();
+})();
 
 // ✅ 내가 단 댓글만 불러오기 (대댓글 제외)
 router.get('/my-comments', async (req, res) => {
