@@ -18,10 +18,6 @@ async function connectDB() {
     return connection;
 }
 
-// 파일 최상단
-const mysql = require("mysql2/promise");
-require('dotenv').config();
-
 async function ensureDatabaseAndTables() {
   const base = await mysql.createConnection({
     host: process.env.DB_HOST,
