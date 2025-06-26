@@ -1,3 +1,7 @@
+const BASE_URL = window.location.hostname.includes("localhost")
+  ? "http://localhost:3000"
+  : "https://your-backend-service.onrender.com";
+
 function togglePassword(id) {
     const field = document.getElementById(id);
     field.type = field.type === "password" ? "text" : "password";
@@ -42,7 +46,7 @@ function registerStudent() {
         return;
     }
 
-    fetch("http://localhost:3000/auth/signup/student", {
+    fetch("${BASE_URL}/auth/signup/student", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, name, password })
@@ -68,7 +72,7 @@ function registerTeacher() {
         return;
     }
 
-    fetch("http://localhost:3000/auth/signup/teacher", {
+    fetch("${BASE_URL}/auth/signup/teacher", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, password, securityKey })
@@ -94,7 +98,7 @@ function loginStudent() {
         return;
     }
 
-    fetch("http://localhost:3000/auth/login/student", {
+    fetch(${BASE_URL}/auth/login/student", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -129,7 +133,7 @@ function loginTeacher() {
         return;
     }
 
-    fetch("http://localhost:3000/auth/login/teacher", {
+    fetch("${BASE_URL}/auth/login/teacher", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
