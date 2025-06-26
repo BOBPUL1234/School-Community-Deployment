@@ -4,19 +4,27 @@ const mysql = require("mysql2/promise");
 const router = express.Router();
 
 async function connectDB() {
-  const connection = await mysql.createConnection({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME_COMMUNITY,
-    charset: 'utf8mb4'
-  });
+  try {
+    const connection = await mysql.createConnection({
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME_COMMUNITY,
+      charset: 'utf8mb4'
+    });
+    return connection;
+  } catch (err) {
+    console.error("❌ DB 연결 실패:", err.message);
+    return null;
+  }
 }
 
 // ✅ likes 테이블이 없으면 생성
 async function ensureLikesTable() {
   const db = await connectDB();
+  if (!db) return; // 연결 실패 시 함수 종료
+
   await db.execute(`
     CREATE TABLE IF NOT EXISTS likes (
       id INT AUTO_INCREMENT PRIMARY KEY,
@@ -26,6 +34,7 @@ async function ensureLikesTable() {
       UNIQUE KEY unique_like (user_id, target_type, target_id)
     )
   `);
+
   await db.end();
 }
 
