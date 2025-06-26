@@ -8,6 +8,26 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
 
+const mysql = require('mysql2/promise');
+
+//DB 생성 로직 (school_db 없으면 자동 생성)
+(async () => {
+  try {
+    const connection = await mysql.createConnection({
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD
+    });
+
+    await connection.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME_SCHOOL}\``);
+    console.log(`✅ '${process.env.DB_NAME_SCHOOL}' 데이터베이스 생성 또는 확인 완료`);
+    await connection.end();
+  } catch (err) {
+    console.error('❌ DB 생성 중 오류 발생:', err);
+    process.exit(1); // DB가 안 만들어졌으면 서버도 종료
+  }
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
