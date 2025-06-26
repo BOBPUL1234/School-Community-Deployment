@@ -84,8 +84,6 @@ module.exports = {
   ensureDatabaseAndTables // ✅ 이렇게 꼭 export 되어야 함
 };
 
-module.exports = { ensureDatabaseAndTables };
-
 async function ensureBookmarkColumn() {
     const db = await connectDB();
     const [result] = await db.execute(`SHOW COLUMNS FROM likes LIKE 'is_bookmarked'`);
