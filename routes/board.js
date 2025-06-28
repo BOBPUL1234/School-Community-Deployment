@@ -19,6 +19,7 @@ async function connectDB() {
 }
 
 async function ensureDatabaseAndTables() {
+  ensureBookmarkColumn();
   const base = await mysql.createConnection({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
