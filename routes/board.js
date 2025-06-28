@@ -153,9 +153,18 @@ router.get('/posts', async (req, res) => {
     try {
         const db = await connectDB();
         const [posts] = await db.execute(`
-            SELECT id, title, content, author_id, created_at, likes
-            FROM posts
-            ORDER BY created_at DESC
+          SELECT 
+            p.id,
+            p.title,
+            p.content,
+            p.author_id,
+            p.created_at,
+            COUNT(l.id) AS likes
+          FROM posts p
+          LEFT JOIN likes l
+            ON l.target_type = 'post' AND l.target_id = p.id
+          GROUP BY p.id
+          ORDER BY p.created_at DESC
         `);
 
         for (const post of posts) {
