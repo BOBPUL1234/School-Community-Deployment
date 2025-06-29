@@ -197,8 +197,12 @@ router.post('/', async (req, res) => {
 
         for (const c of existing) {
             nicknameMap.set(c.user_id, c.nickname);
+        
+            // 숫자 닉네임만 추출
             const match = c.nickname.match(/^익명(\d+)$/);
-            if (match) maxAnon = Math.max(maxAnon, parseInt(match[1]));
+            if (match) {
+                maxAnon = Math.max(maxAnon, parseInt(match[1]));
+            }
         }
 
         // 3. 새 nickname 결정
