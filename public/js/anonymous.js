@@ -507,7 +507,7 @@ async function addPost() {
         const response = await fetch(`${BASE_URL}/board/post`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ title, content })  // 🔥 created_at 포함
+            body: JSON.stringify({ title, content }),  // 🔥 created_at 포함
             credentials: "include"
         });
 
