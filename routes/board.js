@@ -151,32 +151,31 @@ forceFixLikesCharsetSafe();
 // ✅ 게시글 목록 조회
 // ✅ 전체 게시글 목록 조회
 router.get('/posts', async (req, res) => {
-    const userId = req.session?.user?.id;
+    const userId = req.session?.user?.id || null;
 
     try {
         const db = await connectDB();
-        const [posts] = await db.execute(`
-            SELECT id, title, content, author_id, created_at, likes
-            FROM posts
-            ORDER BY created_at DESC
-        `);
 
-        for (const post of posts) {
-            if (userId) {
-                const [[like]] = await db.execute(`
-                    SELECT 1 FROM likes WHERE user_id = ? AND target_type = 'post' AND target_id = ?
-                `, [userId, post.id]);
-                post.isLiked = !!like;
+        let postsQuery = `
+            SELECT 
+                p.*,
+                ${userId ? `
+                    EXISTS (
+                        SELECT 1 FROM likes l
+                        WHERE l.user_id = ? AND l.target_type = 'post' AND l.target_id = p.id
+                    ) AS isLiked,
+                    EXISTS (
+                        SELECT 1 FROM likes l
+                        WHERE l.user_id = ? AND l.target_type = 'post' AND l.target_id = p.id AND l.is_bookmarked = 1
+                    ) AS isBookmarked
+                ` : `0 AS isLiked, 0 AS isBookmarked`}
+            FROM posts p
+            ORDER BY p.created_at DESC
+        `;
 
-                const [[bookmark]] = await db.execute(`
-                    SELECT 1 FROM likes WHERE user_id = ? AND target_type = 'post' AND target_id = ? AND is_bookmarked = 1
-                `, [userId, post.id]);
-                post.isBookmarked = !!bookmark;
-            } else {
-                post.isLiked = false;
-                post.isBookmarked = false;
-            }
-        }
+        const [posts] = userId
+            ? await db.execute(postsQuery, [userId, userId])
+            : await db.execute(postsQuery);
 
         await db.end();
         res.json(posts);
