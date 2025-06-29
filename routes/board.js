@@ -77,6 +77,12 @@ async function ensureDatabaseAndTables() {
         `);
     }
 
+    // posts 테이블에 likes 컬럼 없으면 추가
+    const [likesCol] = await db.execute(`SHOW COLUMNS FROM posts LIKE 'likes'`);
+    if (likesCol.length === 0) {
+      await db.execute(`ALTER TABLE posts ADD COLUMN likes INT DEFAULT 0`);
+    }
+
     await db.end();
     await rootConnection.end();
 }
