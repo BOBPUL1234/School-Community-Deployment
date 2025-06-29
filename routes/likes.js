@@ -48,8 +48,27 @@ async function ensureLikesColumn(tableName) {
   await db.end();
 }
 
+async function ensureLikesColumnExists(tableName) {
+  const db = await connectDB();
+  try {
+    const [result] = await db.execute(`SHOW COLUMNS FROM ${tableName} LIKE 'likes'`);
+    if (result.length === 0) {
+      await db.execute(`ALTER TABLE ${tableName} ADD COLUMN likes INT DEFAULT 0`);
+      console.log(`✅ ${tableName} 테이블에 likes 컬럼 추가됨`);
+    } else {
+      console.log(`✅ ${tableName} 테이블에 이미 likes 컬럼 존재`);
+    }
+  } catch (err) {
+    console.error(`❌ ${tableName} 테이블에 likes 컬럼 추가 중 오류 발생:`, err.message);
+  } finally {
+    await db.end();
+  }
+}
+
 // ✅ 라우터 실행 시 likes 테이블을 한 번 생성해둠
 ensureLikesTable();
+ensureLikesColumnExists("posts");     // posts 테이블에 likes 컬럼 추가
+ensureLikesColumnExists("comments");  // comments 테이블에 likes 컬럼 추가
 
 async function ensureLikesColumn(tableName) {
   const db = await connectDB();
