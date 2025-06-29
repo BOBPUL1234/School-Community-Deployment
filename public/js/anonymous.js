@@ -508,6 +508,7 @@ async function addPost() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ title, content })  // 🔥 created_at 포함
+            credentials: "include"
         });
 
         const newPost = await response.json();
