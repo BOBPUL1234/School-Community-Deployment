@@ -9,11 +9,26 @@ const postModal = document.getElementById("postModal");
 
 async function loadPostsFromServer() {
     try {
-        posts = await response.json(); // 🔥 서버에서 불러온 데이터를 posts 배열에 저장
+        const response = await fetch(`${BASE_URL}/board/posts`, {
+            credentials: "include"  // 세션 필요
+        });
+
+        if (!response.ok) {
+            throw new Error(`❌ 서버 응답 오류: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // ✅ 배열이 아닌 경우 예외 처리
+        if (!Array.isArray(data)) {
+            throw new Error("❌ 서버에서 받은 데이터가 배열이 아닙니다.");
+        }
+
+        posts = data;
         console.log("✅ 서버에서 데이터 불러오기 성공:", posts);
-        renderPostList(); // 🔥 화면에 데이터 다시 렌더링
+        renderPostList(); // 🔥 화면에 출력
     } catch (error) {
-        console.error("❌ 데이터 불러오기 오류:", error);
+        console.error("❌ 데이터 불러오기 오류:", error.message);
     }
 }
 
@@ -467,29 +482,6 @@ function renderReplies(replies, container) {
     }
 
     updateReplies(); // 초기 3개 렌더링
-}
-
-async function loadPostsFromServer() {
-    try {
-        const response = await fetch(`${BASE_URL}/board/posts`);
-
-        if (!response.ok) {
-            throw new Error(`❌ 서버 응답 오류: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        // ✅ 배열이 아닌 경우 예외 처리
-        if (!Array.isArray(data)) {
-            throw new Error("❌ 서버에서 받은 데이터가 배열이 아닙니다.");
-        }
-
-        posts = data;
-        console.log("✅ 서버에서 데이터 불러오기 성공:", posts);
-        renderPostList(); // 🔥 화면에 출력
-    } catch (error) {
-        console.error("❌ 데이터 불러오기 오류:", error.message);
-    }
 }
 
 function getCurrentDateTimeForMySQL() {
