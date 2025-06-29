@@ -239,3 +239,9 @@ async function loadMyComments() {
         alert("❌ 내가 작성한 댓글을 불러오지 못했습니다.");
     }
 }
+
+window.loadMyPosts = loadMyPosts;
+window.loadLikedPosts = loadLikedPosts;
+window.loadBookmarkedPosts = loadBookmarkedPosts;
+window.loadMyComments = loadMyComments;
+
