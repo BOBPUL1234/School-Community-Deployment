@@ -1,6 +1,8 @@
-const BASE_URL = window.location.hostname.includes("localhost")
-  ? "http://localhost:3000"
-  : "https://school-community-deployment-1.onrender.com";
+window.BASE_URL = window.BASE_URL || (
+  window.location.hostname.includes("localhost")
+    ? "http://localhost:3000"
+    : "https://school-community-deployment-1.onrender.com"
+);
 
 function openActivity(title) {
   document.getElementById("activityTitle").innerText = title;
