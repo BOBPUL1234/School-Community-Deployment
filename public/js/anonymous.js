@@ -555,10 +555,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 });
 
+let isCommentSubmitting = false;
 
 async function submitComment(event, input) {
-    let isCommentSubmitting = false;
-  
     if (event.key === "Enter" && event.ctrlKey) {
         input.value += "\n";
         return;
@@ -571,6 +570,7 @@ async function submitComment(event, input) {
 
         if (currentPostIndex === null || !posts[currentPostIndex]) {
             console.error("❌ 게시글을 찾을 수 없음!");
+            isCommentSubmitting = false;
             return;
         }
 
@@ -651,10 +651,13 @@ async function submitReply(event, input) {
 async function submitCommentByButton(button) {
     const input = button.previousElementSibling;
     const comment = input.value.trim();
-    if (!comment) return;
+    if (!comment || isCommentSubmitting) return;
 
+    isCommentSubmitting = true;
+  
     if (currentPostIndex === null || !posts[currentPostIndex]) {
         console.error("❌ 게시글을 찾을 수 없음!");
+        isCommentSubmitting = false;
         return;
     }
 
@@ -688,6 +691,8 @@ async function submitCommentByButton(button) {
     } catch (error) {
         console.error("❌ 댓글 저장 오류:", error);
         alert("댓글 저장에 실패했습니다.");
+    } finally {
+        isCommentSubmitting = false;
     }
 }
 
