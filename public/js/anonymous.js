@@ -557,8 +557,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 async function submitComment(event, input) {
+    let isCommentSubmitting = false;
+  
     if (event.key === "Enter" && event.ctrlKey) {
-        console.log("🔥 Ctrl + Enter 입력 감지됨: 줄바꿈 적용");
         input.value += "\n";
         return;
     }
@@ -566,6 +567,7 @@ async function submitComment(event, input) {
     if (event.key === "Enter") {
         const comment = input.value.trim();
         if (!comment) return;
+        isCommentSubmitting = true;
 
         if (currentPostIndex === null || !posts[currentPostIndex]) {
             console.error("❌ 게시글을 찾을 수 없음!");
@@ -596,6 +598,8 @@ async function submitComment(event, input) {
             input.value = "";                 // 입력창 초기화
         } catch (error) {
             console.error("❌ 댓글 저장 오류:", error);
+        } finally {
+            isCommentSubmitting = false;
         }
     }
 }
