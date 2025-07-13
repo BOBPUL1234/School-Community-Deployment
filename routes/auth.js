@@ -265,23 +265,37 @@ router.get("/profile", async (req, res) => {
 // ✅ 비밀번호 변경
 router.post("/change-password", async (req, res) => {
   const { currentPassword, newPassword } = req.body;
-  const userId = req.session?.user?.id;
+  const sessionUser = req.session?.user;
 
-  if (!userId) return res.json({ success: false, message: "로그인이 필요합니다." });
+  if (!sessionUser?.id || !sessionUser?.role)
+    return res.json({ success: false, message: "로그인이 필요합니다." });
+
+  const userId = sessionUser.id;
+  const role = sessionUser.role;
 
   try {
     const db = await connectDB();
-    const [results] = await db.query("SELECT password FROM students WHERE id = ?", [userId]);
-    if (results.length === 0) return res.json({ success: false, message: "사용자를 찾을 수 없습니다." });
+
+    // 어떤 테이블을 사용할지 결정
+    const table = role === "teacher" ? "teachers" : "students";
+
+    const [results] = await db.query(`SELECT password FROM ${table} WHERE id = ?`, [userId]);
+    if (results.length === 0)
+      return res.json({ success: false, message: "사용자를 찾을 수 없습니다." });
 
     const isMatch = await bcrypt.compare(currentPassword, results[0].password);
-    if (!isMatch) return res.json({ success: false, message: "현재 비밀번호가 틀렸습니다." });
+    if (!isMatch)
+      return res.json({ success: false, message: "현재 비밀번호가 틀렸습니다." });
 
     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-    await db.query("UPDATE students SET password = ? WHERE id = ?", [hashedNewPassword, userId]);
+    await db.query(`UPDATE ${table} SET password = ? WHERE id = ?`, [hashedNewPassword, userId]);
 
     await db.end();
-    res.json({ success: true, message: "비밀번호가 변경되었습니다. 프로필 화면으로 이동합니다.", redirect: "/profile.html" });
+    res.json({
+      success: true,
+      message: "비밀번호가 변경되었습니다. 프로필 화면으로 이동합니다.",
+      redirect: "/profile.html"
+    });
   } catch (err) {
     console.error("❌ 비밀번호 변경 오류:", err);
     res.json({ success: false, message: "서버 오류: " + err.message });
