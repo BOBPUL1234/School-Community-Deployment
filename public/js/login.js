@@ -106,7 +106,9 @@ function loginStudent() {
     })
     .then(res => res.json())
     .then(data => {
-        alert(data.message);
+        if (!data.success && data.message) {
+            alert(data.message);
+        }
         if (data.success) {
             sessionStorage.setItem("userId", data.user.user_id);
             sessionStorage.setItem("role", data.user.role);
@@ -141,7 +143,9 @@ function loginTeacher() {
     })
     .then(res => res.json())
     .then(data => {
-        alert(data.message);
+        if (!data.success && data.message) {
+            alert(data.message);
+        };
         if (data.success) {
             sessionStorage.setItem("userId", data.user.user_id);
             sessionStorage.setItem("role", data.user.role);
