@@ -217,7 +217,19 @@ router.post("/login/teacher", async (req, res) => {
     }
 
     await db.end();
-    res.json({ success: isMatch, message: isMatch ? "✅ 로그인 성공!" : "❌ 비밀번호가 틀렸습니다.", redirect: "/main.html", user: { user_id: name, role: 'teacher' } });
+
+    if (isMatch) {
+      res.json({
+        success: true,
+        redirect: "/main.html",
+        user: { user_id: name, role: 'teacher' }
+      });
+   } else {
+      res.json({
+        success: false,
+        message: "❌ 비밀번호가 틀렸습니다."
+     });
+   }
   } catch (err) {
     console.error("❌ 교사 로그인 오류:", err);
     res.json({ success: false, message: "❌ 서버 오류: " + err.message });
