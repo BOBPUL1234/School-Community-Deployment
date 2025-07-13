@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>성적 산출</title>
 
-  <link rel="stylesheet" href="/css/base.css" />
   <link rel="stylesheet" href="style.mobile.css" media="(max-width: 768px)" />
   <link rel="stylesheet" href="style.desktop.css" media="(min-width: 769px)" />
   <link rel="stylesheet" href="/css/grade.css" />
@@ -45,20 +44,21 @@
     <p>가중 평균 등급: <span id="weighted-grade"></span></p>
   </div>
 
-<div class="bottom-nav">
-    <!-- 홈 -->
-    <a href="/main.html"><div class="btn7"><img src="/png/home_1.png" class="btn7-icon"></div></a>
-    <!-- 시간표 -->
-    <a href="/timetable.html"><div class="btn8"><img src="/png/table_1.png" class="btn8-icon"></div></a>
-    <!-- 채팅 -->
-    <a href="/chat.html"><div class="btn9"><img src="/png/chat_1.png" class="btn9-icon"></div></a>
-    <!-- 게시판 -->
-    <a href="/anonymous.html"><div class="btn10"><img src="/png/board_1.png" class="btn10-icon"></div></a>
-    <!-- 프로필 -->
-    <a href="/profile.html"><div class="btn11"><img src="/png/profile_1.png" class="btn11-icon"></div></a>
+<!-- 나가기 버튼 -->
+<div style="max-width:600px; margin: 30px auto 20px; text-align:center;">
+  <button onclick="location.href='/main'" style="
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    transition: 0.2s ease;
+  ">나가기</button>
 </div>
 
-  <script src="/js/script.js"></script>
   <script src="/js/grade.js"></script>
 </body>
 </html>
