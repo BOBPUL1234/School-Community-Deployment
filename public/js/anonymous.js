@@ -604,6 +604,7 @@ async function submitComment(event, input) {
     }
 }
 
+let isReplySubmitting = false;
 
 async function submitReply(event, input) {
     if (event.key === "Enter" && event.ctrlKey) {
