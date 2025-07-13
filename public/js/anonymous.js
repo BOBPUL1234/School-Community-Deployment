@@ -565,7 +565,7 @@ async function submitComment(event, input) {
 
     if (event.key === "Enter") {
         const comment = input.value.trim();
-        if (!comment) return;
+        if (!comment || isCommentSubmitting) return;
         isCommentSubmitting = true;
 
         if (currentPostIndex === null || !posts[currentPostIndex]) {
@@ -613,7 +613,9 @@ async function submitReply(event, input) {
 
     if ((event.key && event.key === "Enter") || event.type === "click") {
         const text = input.value.trim();
-        if (!text) return;
+        if (!text || isReplySubmitting) return;
+
+        isReplySubmitting = true;
 
         const commentDiv = input.closest(".comment");
         
@@ -642,9 +644,10 @@ async function submitReply(event, input) {
             renderComments(posts[currentPostIndex].comments); 
         } catch (error) {
             console.error("❌ 대댓글 저장 오류:", error);
+        } finally {
+            isReplySubmitting = false;
+            input.parentElement?.remove();
         }
-
-        input.parentElement.remove();
     }
 }
 
