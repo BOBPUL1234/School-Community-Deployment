@@ -180,7 +180,20 @@ router.post("/login/student", async (req, res) => {
     }
 
     await db.end();
-    res.json({ success: isMatch, message: isMatch ? "✅ 로그인 성공!" : "❌ 비밀번호가 틀렸습니다.", redirect: "/main.html", user: { user_id: id, role: 'student' } });
+
+   if (isMatch) {
+      res.json({
+        success: true,
+        redirect: "/main.html",
+        user: { user_id: id, role: 'student' }
+      });
+   } else {
+      res.json({
+        success: false,
+        message: "❌ 비밀번호가 틀렸습니다."
+     });
+   }
+    
   } catch (err) {
     console.error("❌ 로그인 오류:", err);
     res.json({ success: false, message: "❌ 서버 오류: " + err.message });
@@ -256,7 +269,7 @@ router.post("/change-password", async (req, res) => {
     await db.query("UPDATE students SET password = ? WHERE id = ?", [hashedNewPassword, userId]);
 
     await db.end();
-    res.json({ success: true, message: "✅ 비밀번호가 변경되었습니다. 프로필 화면으로 이동합니다.", redirect: "/profile.html" });
+    res.json({ success: true, message: "비밀번호가 변경되었습니다. 프로필 화면으로 이동합니다.", redirect: "/profile.html" });
   } catch (err) {
     console.error("❌ 비밀번호 변경 오류:", err);
     res.json({ success: false, message: "서버 오류: " + err.message });
