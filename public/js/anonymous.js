@@ -503,6 +503,9 @@ async function addPost() {
         return;
     }
 
+    const addBtn = document.querySelector("#submitPostBtn");
+    if (addBtn) addBtn.disabled = true;
+
     try {
         const response = await fetch(`${BASE_URL}/board/post`, {
             method: "POST",
@@ -518,9 +521,11 @@ async function addPost() {
         toggleModal();
         document.getElementById("postTitle").value = "";
         document.getElementById("postContent").value = "";
-        location.reload()
+        // location.reload()
     } catch (error) {
         console.error("❌ 게시글 저장 오류:", error);
+    } finally {
+        if (addBtn) addBtn.disabled = false; // 🔓 복원
     }
 }
 
