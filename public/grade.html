@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>성적 산출</title>
+
+  <link rel="stylesheet" href="base.css" />
+  <link rel="stylesheet" href="style.mobile.css" media="(max-width: 768px)" />
+  <link rel="stylesheet" href="style.desktop.css" media="(min-width: 769px)" />
+  <link rel="stylesheet" href="/css/grade.css" />
+</head>
+<body>
+
+  <h2 style="text-align:center; margin: 40px 0 25px;">📚 성적 산출기 (과목별 단위수/등급)</h2>
+
+  <div id="subjects" style="max-width:600px; margin: 0 auto 30px;">
+    <div class="subject-row">
+      <input type="text" placeholder="과목명" class="subject-name" />
+      <input type="number" inputmode="numeric" placeholder="단위수" class="subject-credit" min="1" />
+      <input type="number" inputmode="numeric" placeholder="등급 (1~9)" class="subject-grade" min="1" max="9" />
+      <button class="remove-subject-btn">❌</button>
+    </div>
+    <div class="subject-row">
+      <input type="text" placeholder="과목명" class="subject-name" />
+      <input type="number" inputmode="numeric" placeholder="단위수" class="subject-credit" min="1" />
+      <input type="number" inputmode="numeric" placeholder="등급 (1~9)" class="subject-grade" min="1" max="9" />
+      <button class="remove-subject-btn">❌</button>
+    </div>
+    <div class="subject-row">
+      <input type="text" placeholder="과목명" class="subject-name" />
+      <input type="number" inputmode="numeric" placeholder="단위수" class="subject-credit" min="1" />
+      <input type="number" inputmode="numeric" placeholder="등급 (1~9)" class="subject-grade" min="1" max="9" />
+      <button class="remove-subject-btn">❌</button>
+    </div>
+  </div>
+
+  <div style="max-width:600px; margin: 0 auto;">
+    <button id="add-subject-btn">+ 과목 추가</button>
+    <button id="calc-btn">성적 산출</button>
+  </div>
+
+  <div id="resultBox" style="max-width:600px; margin: 30px auto 0; display:none; color:#2d7f2e; font-weight:600; font-size:18px;">
+    <p>총 단위수: <span id="total-credit"></span></p>
+    <p>가중 평균 등급: <span id="weighted-grade"></span></p>
+  </div>
+
+  <script src="grade.js"></script>
+</body>
+</html>
