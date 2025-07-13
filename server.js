@@ -57,6 +57,7 @@ const router = express.Router();
   // ✅ 페이지 라우팅
   app.get("/", (req, res) => res.sendFile(path.join(__dirname, "public", "login.html")));
   app.get("/main", (req, res) => res.sendFile(path.join(__dirname, "public", "main.html")));
+  app.get("/grade", (req, res) => res.sendFile(path.join(__dirname, "public", "grade.html")));
   app.get("/timetable", (req, res) => res.sendFile(path.join(__dirname, "public", "timetable.html")));
   app.get("/chat", (req, res) => res.sendFile(path.join(__dirname, "public", "chat.html")));
   app.get("/chatroom", (req, res) => res.sendFile(path.join(__dirname, "public", "chatroom.html")));
